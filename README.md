@@ -12,15 +12,11 @@ User Stories
 
 *  Users can set up a game they create with different applicable settings
 
-*  Start with keeping score for a ping pong game at first
+..*  Start with keeping score for a ping pong game at first
 
-*  21 point game ~ etc . . .
+..*  21 point game
 
-*     Max score
-
-*     Each score is worth 7 points
-
-*     etc
+..*  Number of players, etc . . .
 
 *  Users can modify the score of the games they create (until the game is complete)
 
