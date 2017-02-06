@@ -29,17 +29,17 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    controller: 'ScoreKeeperAppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
+  // .state('app.search', {
+  //   url: '/search',
+  //   views: {
+  //     'menuContent': {
+  //       templateUrl: 'templates/search.html'
+  //     }
+  //   }
+  // })
 
   .state('app.browse', {
       url: '/browse',
@@ -67,7 +67,44 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'PlaylistCtrl'
       }
     }
+  })
+
+  // My custom states
+  .state('app.about', {
+    url: '/about',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/about.html'
+      }
+    }
+  })
+
+  .state('app.createGame', {
+    url: '/createGame',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/createGame.html'
+      }
+    }
+  })
+
+  .state('app.liveGames', {
+    url: '/liveGames',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/liveGames.html'
+      }
+    }
+  })
+
+  .state('app.pastGames', {
+    url: '/pastGames',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/pastGames.html'
+      }
+    }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/about');
 });
