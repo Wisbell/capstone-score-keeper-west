@@ -90,6 +90,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
+  .state('app.myGames', {
+    url: '/myGames',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/myGames.html'
+      }
+    }
+  })
+
   .state('app.createGame', {
     url: '/createGame',
     views: {
