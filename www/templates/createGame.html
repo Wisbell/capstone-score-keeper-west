@@ -4,6 +4,8 @@
 
     <form>
       <div class="list">
+
+        <!-- Name the game -->
         <label class="item item-input item-stacked-label">
           <span class="input-label">What do you want to call your game?</span>
           <input type="text" placeholder="Name your game">
@@ -19,25 +21,51 @@
 
             <select>
                <option>Option 1</option>
-               <option selected>Option 2</option>
+               <option selected>Ping Pong</option>
                <option>Option 3</option>
             </select>
 
          </label>
         </label>
 
+        <!-- Game Settings -->
         <label class="item item-input item-stacked-label">
           <span class="input-label">Game Settings</span>
-          <input type="text" placeholder="john@suhr.com">
+          <!-- Number of Players -->
+          <label class = "item item-input item-select item-light">
+            <div class = "input-label">
+               How many Players?
+            </div>
+
+            <select>
+               <option selected>2</option>
+               <option>4</option>
+            </select>
+
+         </label>
+
+          <!-- Score to win -->
+          <label class = "item item-input item-select item-light">
+            <div class = "input-label">
+               Score to Win
+            </div>
+
+            <select>
+               <option>11</option>
+               <option selected>21</option>
+            </select>
+
+         </label>
+
         </label>
 
         <label class="item item-input item-stacked-label">
           <span class="input-label">Team Settings</span>
 
           <!-- Team Row Div -->
-          <div class="row">
+          <!-- <div class="row"> -->
             <!-- Team 1 Div -->
-            <div class="col col-50">
+            <div class="col">
               <p>Team 1</p>
               <!-- Team 1 Info -->
               <div class="list">
@@ -63,7 +91,7 @@
             </div> <!-- Close Team 1 Div -->
 
             <!-- Team 2 Div -->
-            <div class="col col-50">
+            <div class="col">
               <p>Team 2</p>
               <!-- Team 2 Info -->
               <div class="list">
@@ -89,7 +117,7 @@
               </div>
             </div>  <!-- Close Team 2 Div -->
 
-          </div> <!-- Close Row Div -->
+          <!-- </div>  --><!-- Close Row Div -->
 
         </label>
 
