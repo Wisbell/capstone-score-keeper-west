@@ -5,27 +5,28 @@
     <form name="createForm" ng-submit="submitGameButton()">
       <div class="list">
 
-        <!-- Name the game -->
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">What do you want to call your game?</span>
-          <input ng-model="gameInfo.gameName" type="text" placeholder="Name your game">
-        </label>
-
         <!-- Type of Game? -->
         <label class="item item-input item-stacked-label">
-          <span class="input-label">Score what type of game?</span><br>
+          <span class="input-label">Basic Settings</span><br>
           <label class = "item item-input item-select item-light">
             <div class = "input-label">
                Type
             </div>
 
+            <!-- List games in select input -->
             <select>
-               <option>Option 1</option>
                <option selected>Ping Pong</option>
+               <option>Option 2</option>
                <option>Option 3</option>
             </select>
 
          </label>
+
+         <!-- Name the game -->
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">What do you want to call your game?</span>
+          <input ng-model="gameInfo.gameName" type="text" placeholder="Name your game">
+        </label>
         </label>
 
         <!-- Game Settings -->

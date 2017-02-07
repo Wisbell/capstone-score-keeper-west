@@ -63,7 +63,10 @@ angular.module('starter.controllers', [])
 
   // Object to store info from create game partial
   $scope.gameInfo = {
-      gameName: ''
+      gameName: '',
+
+      team1: '',
+      team2: ''
     }
 
 

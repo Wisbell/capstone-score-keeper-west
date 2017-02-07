@@ -8,17 +8,20 @@
     "currentGames": {
         "crazyUid2423": {
             "gameName": "cool game name here",
+            "gameSettingId": "gameSettingCrazyId1234",
             "numPlayers": 2,
             "winningScore": 21,
             "player1Score": 1,
-            "player2Score": 18
+            "player2Score": 18,
+            "currentTurn": "",
+            "hostUid": ""
         }
     },
     "gameSettings": {
-        "crazyUid234234": {
+        "gameSettingCrazyId1234": {
             "gameName": "Ping Pong",
-            "gameDescription": "2 player Ping Pong game with the winning score of 21",
-            "gameRules": "",
+            "gameDescription": "Regular 2 player ping pong game",
+            "gameRules": "Winning Score of 21.  Switch servers every 5 points",
             "winningScore": 21,
             "switchServer": 5,
             "numPlayers": 2
