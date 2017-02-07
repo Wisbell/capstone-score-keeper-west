@@ -2,13 +2,13 @@
   <ion-content>
     <h1>Set up a new game!</h1>
 
-    <form ng-submit="submitGameButton()">
+    <form name="createForm" ng-submit="submitGameButton()">
       <div class="list">
 
         <!-- Name the game -->
         <label class="item item-input item-stacked-label">
           <span class="input-label">What do you want to call your game?</span>
-          <input type="text" placeholder="Name your game">
+          <input ng-model="gameInfo.gameName" type="text" placeholder="Name your game">
         </label>
 
         <!-- Type of Game? -->

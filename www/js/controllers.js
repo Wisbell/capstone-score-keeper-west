@@ -57,10 +57,22 @@ angular.module('starter.controllers', [])
 
 // Create Game Controller
 .controller('CreateGameCtrl', function($scope) {
-
   console.log('CreateGameCtrl loaded')
+
+  // let gameName
+
+  // Object to store info from create game partial
+  $scope.gameInfo = {
+      gameName: ''
+    }
+
 
   $scope.submitGameButton = () => {
     console.log("submit button clicked")
+
+    // gameInfo.gameName = $scope.gameName
+
+    // console.log($scope.createForm.gameName)
+    console.log($scope.gameInfo.gameName)
   }
 });
