@@ -4,6 +4,8 @@ Westley Isbell's capstone project for NSS Cohort 17
 
 # Trello - https://trello.com/b/IQC4v54m/capstone
 
+# Simple Mock Up - http://imgur.com/rHR61Ei
+
 #Score Keeping App using Ionic 1
 
 User Stories

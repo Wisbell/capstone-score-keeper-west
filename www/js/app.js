@@ -103,7 +103,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     url: '/createGame',
     views: {
       'menuContent': {
-        templateUrl: 'templates/createGame.html'
+        templateUrl: 'templates/createGame.html',
+        controller: 'CreateGameCtrl'
       }
     }
   })

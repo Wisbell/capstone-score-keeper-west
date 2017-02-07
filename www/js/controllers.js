@@ -53,4 +53,14 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+// Create Game Controller
+.controller('CreateGameCtrl', function($scope) {
+
+  console.log('CreateGameCtrl loaded')
+
+  $scope.submitGameButton = () => {
+    console.log("submit button clicked")
+  }
 });
