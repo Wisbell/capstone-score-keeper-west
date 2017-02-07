@@ -1,5 +1,103 @@
 <ion-view view-title="Create a Game!">
   <ion-content>
-    <h1>Create</h1>
+    <h1>Set up a new game!</h1>
+
+    <form>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">What do you want to call your game?</span>
+          <input type="text" placeholder="Name your game">
+        </label>
+
+        <!-- Type of Game? -->
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Score what type of game?</span><br>
+          <label class = "item item-input item-select item-light">
+            <div class = "input-label">
+               Type
+            </div>
+
+            <select>
+               <option>Option 1</option>
+               <option selected>Option 2</option>
+               <option>Option 3</option>
+            </select>
+
+         </label>
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Game Settings</span>
+          <input type="text" placeholder="john@suhr.com">
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Team Settings</span>
+
+          <!-- Team Row Div -->
+          <div class="row">
+            <!-- Team 1 Div -->
+            <div class="col col-50">
+              <p>Team 1</p>
+              <!-- Team 1 Info -->
+              <div class="list">
+                <!-- Team 1 Name Header -->
+                <label class="item item-input item-stacked-label">
+                  <span class="input-label">Name</span>
+                  <input type="text" placeholder="Team name here">
+                </label>
+
+                <label class = "item item-input item-select item-light">
+                  <div class = "input-label">
+                     Player
+                  </div>
+
+                  <select>
+                     <option>Guest</option>
+                     <option selected>Player List Here</option>
+                     <option>Option 3</option>
+                  </select>
+
+                </label>
+              </div>
+            </div> <!-- Close Team 1 Div -->
+
+            <!-- Team 2 Div -->
+            <div class="col col-50">
+              <p>Team 2</p>
+              <!-- Team 2 Info -->
+              <div class="list">
+                <!-- Team 2 Name Header -->
+                <label class="item item-input item-stacked-label">
+                  <span class="input-label">Name</span>
+                  <input type="text" placeholder="Team name here">
+                </label>
+
+                <label class = "item item-input item-select item-light">
+
+                  <div class = "input-label">
+                     Player
+                  </div>
+
+                  <select>
+                     <option>Guest</option>
+                     <option selected>Player List here</option>
+                     <option>Option 3</option>
+                  </select>
+
+                </label>
+              </div>
+            </div>  <!-- Close Team 2 Div -->
+
+          </div> <!-- Close Row Div -->
+
+        </label>
+
+      </div> <!-- Close List Wrapper Div -->
+
+    <input class="button button-full button-positive createGameButton" type="submit" value="Submit">
+
+  </form>
+
   </ion-content>
 </ion-view>
