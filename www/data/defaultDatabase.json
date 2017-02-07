@@ -1,0 +1,27 @@
+{
+    "users": {
+        "crazyUid1": {
+            "userName": "billy",
+            "uid": "crazy firebase uid here"
+        }
+    },
+    "currentGames": {
+        "crazyUid2423": {
+            "gameName": "cool game name here",
+            "numPlayers": 2,
+            "winningScore": 21,
+            "player1Score": 1,
+            "player2Score": 18
+        }
+    },
+    "gameSettings": {
+        "crazyUid234234": {
+            "gameName": "Ping Pong",
+            "gameDescription": "2 player Ping Pong game with the winning score of 21",
+            "gameRules": "",
+            "winningScore": 21,
+            "switchServer": 5,
+            "numPlayers": 2
+        }
+    }
+}
