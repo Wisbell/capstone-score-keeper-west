@@ -1,30 +1,85 @@
 {
-    "users": {
-        "crazyUid1": {
-            "userName": "billy",
-            "uid": "crazy firebase uid here"
-        }
-    },
     "currentGames": {
         "crazyUid2423": {
+            "currentTurn": "",
             "gameName": "cool game name here",
             "gameSettingId": "gameSettingCrazyId1234",
+            "hostUid": "",
             "numPlayers": 2,
-            "winningScore": 21,
             "player1Score": 1,
             "player2Score": 18,
-            "currentTurn": "",
-            "hostUid": ""
+            "winningScore": 21
         }
     },
     "gameSettings": {
-        "gameSettingCrazyId1234": {
-            "gameName": "Ping Pong",
+        "pingPongOne": {
+            "gameDescription": "Greatest Game Ever",
+            "gameRules": "Winning Score of 21.  Switch servers every 5 points",
+            "gameTypeName": "Ping Pong 1",
+            "numTeams": 2,
+            "dynamicAdditions": {
+                "numPlayers": {
+                    "2": 2,
+                    "4": 4,
+                    "header": "How many players?"
+                },
+                "pointsInfo": {
+                    "header": "Short game or long game?",
+                    "shortGame": {
+                        "winningScore": 11,
+                        "switchServer": 2
+                    },
+                    "longGame": {
+                        "winningScore": 21,
+                        "switchServer": 5
+                    }
+                }
+            }
+        },
+        "pingPongTwo": {
+            "gameDescription": "Greatest Game Ever",
+            "gameRules": "Winning Score of 21.  Switch servers every 5 points",
+            "gameTypeName": "Ping Pong 2",
+            "gameType": {
+                "shortGame": {
+                    "winningScore": 11,
+                    "switchServer": 2
+                },
+                "longGame": {
+                    "winningScore": 21,
+                    "switchServer": 5
+                }
+            }
+        },
+        "gameSettingCrazyId1237": {
             "gameDescription": "Regular 2 player ping pong game",
             "gameRules": "Winning Score of 21.  Switch servers every 5 points",
-            "winningScore": 21,
+            "gameTypeName": "Ping Pong",
+            "numPlayers": 2,
             "switchServer": 5,
-            "numPlayers": 2
+            "winningScore": 21
+        },
+        "gameSettingCrazyId1235": {
+            "gameDescription": "Regular 2 player ping pong game",
+            "gameRules": "Winning Score of 21.  Switch servers every 5 points",
+            "gameTypeName": "Soccer",
+            "numPlayers": 2,
+            "switchServer": 5,
+            "winningScore": 21
+        },
+        "gameSettingCrazyId1236": {
+            "gameDescription": "Regular 2 player ping pong game",
+            "gameRules": "Winning Score of 21.  Switch servers every 5 points",
+            "gameTypeName": "Crazy Game for my game list",
+            "numPlayers": 2,
+            "switchServer": 5,
+            "winningScore": 21
+        }
+    },
+    "users": {
+        "crazyUid1": {
+            "uid": "crazy firebase uid here",
+            "userName": "billy"
         }
     }
 }

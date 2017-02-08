@@ -56,10 +56,14 @@ angular.module('starter.controllers', [])
 })
 
 // Create Game Controller
-.controller('CreateGameCtrl', function($scope) {
-  console.log('CreateGameCtrl loaded')
+.controller('CreateGameCtrl', function($scope, CreateGameFactory) {
 
-  // let gameName
+  // get list of game names to choose from
+  CreateGameFactory.getGameNameList()
+    .then((nameList) => {
+      $scope.gameNameList = nameList
+      $scope.selectedGame = $scope.gameNameList[0]
+    })
 
   // Object to store info from create game partial
   $scope.gameInfo = {
