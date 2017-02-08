@@ -76,6 +76,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     }
   })
 
+  // Game Routes Below here
+  .state('app.createPingPong', {
+    url: '/createGame/pingPong',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/createPingPong.html',
+        controller: 'CreateGameCtrl'
+      }
+    }
+  })
+  // Game Routes End here
+
   .state('app.liveGames', {
     url: '/liveGames',
     views: {
