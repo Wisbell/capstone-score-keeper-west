@@ -89,10 +89,11 @@ angular.module('starter.controllers', [])
 // Ping Pong Create Game Controller
 .controller('CreatePingPongCtrl', function($scope, CreateGameFactory) {
 
+  // this object allows the ability to set gameChocie scope variable
   $scope.settings = {}
 
   // this sets the default choices
-  $scope.playerChoice = "2"
+  $scope.settings.playerChoice = "2"
   $scope.settings.gameChoice = "Long"
   $scope.winningScore = "21";
   $scope.switchServer = "5"
@@ -100,10 +101,6 @@ angular.module('starter.controllers', [])
   // ng-change function for when gameChoice changes
   $scope.updateSettings = () => {
     console.log("gameChoice changed")
-
-    console.log("gameChoice", $scope.settings.gameChoice)
-    console.log("winningScore", $scope.winningScore)
-    console.log("switchServer", $scope.switchServer)
 
     if($scope.settings.gameChoice === "Long") {
       console.log("long game")
@@ -115,6 +112,27 @@ angular.module('starter.controllers', [])
       $scope.winningScore = "11"
       $scope.switchServer = "2"
     }
+  }
+
+  // submit ping pong game function
+  $scope.createGameButton = () => {
+    console.log("createGameButton clicked")
+
+    let gameInfo = {
+      "gameType": "Ping Pong",
+      "gameName": $scope.settings.gameName,
+      "numPlayers": $scope.settings.playerChoice,
+      "winningScore": $scope.winningScore,
+      "switchServer": $scope.switchServer,
+      "team1Name": $scope.settings.team1Name,
+      "team2Name": $scope.settings.team2Name,
+      "team1Points": 0,
+      "team2Points": 0
+    }
+
+    console.log("gameInfo object", gameInfo)
+
+    CreateGameFactory.createNewGame(JSON.stringify(gameInfo))
   }
 
 

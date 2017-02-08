@@ -25,6 +25,11 @@ angular.module('starter.factories', [])
 
                           return nameList
                         })
+                    },
+            createNewGame: function(createGame){
+                      console.log("createNewGame function called from factory")
+                      console.log(createGame)
+                      return createGame
                     }
           } // Close return statement
 })
