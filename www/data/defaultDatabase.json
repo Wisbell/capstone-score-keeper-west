@@ -14,7 +14,7 @@
     "gameSettings": {
         "pingPongOne": {
             "gameDescription": "Greatest Game Ever",
-            "gameRules": "Winning Score of 21.  Switch servers every 5 points",
+            "gameRules": "The servers hit must hit the opposing players side of the table once, and the opposite server must hit the ball back after it has hit once to the other side until one server fails at this task.",
             "gameTypeName": "Ping Pong 1",
             "numTeams": 2,
             "dynamicAdditions": {

@@ -82,7 +82,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     views: {
       'menuContent': {
         templateUrl: 'templates/createPingPong.html',
-        controller: 'CreateGameCtrl'
+        controller: 'CreatePingPongCtrl'
       }
     }
   })

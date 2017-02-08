@@ -55,6 +55,7 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
+
 // Create Game Controller
 .controller('CreateGameCtrl', function($scope, CreateGameFactory) {
 
@@ -82,4 +83,39 @@ angular.module('starter.controllers', [])
     // console.log($scope.createForm.gameName)
     console.log($scope.gameInfo.gameName)
   }
+})
+
+
+// Ping Pong Create Game Controller
+.controller('CreatePingPongCtrl', function($scope, CreateGameFactory) {
+
+  $scope.settings = {}
+
+  // this sets the default choices
+  $scope.playerChoice = "2"
+  $scope.settings.gameChoice = "Long"
+  $scope.winningScore = "21";
+  $scope.switchServer = "5"
+
+  // ng-change function for when gameChoice changes
+  $scope.updateSettings = () => {
+    console.log("gameChoice changed")
+
+    console.log("gameChoice", $scope.settings.gameChoice)
+    console.log("winningScore", $scope.winningScore)
+    console.log("switchServer", $scope.switchServer)
+
+    if($scope.settings.gameChoice === "Long") {
+      console.log("long game")
+      $scope.winningScore = "21"
+      $scope.switchServer = "5"
+    }
+    else if ($scope.settings.gameChoice === "Short"){
+      console.log("short game")
+      $scope.winningScore = "11"
+      $scope.switchServer = "2"
+    }
+  }
+
+
 });
