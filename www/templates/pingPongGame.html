@@ -1,0 +1,43 @@
+<ion-view>
+  <ion-nav-title>{{currentGame.team1Name}} vs {{currentGame.team2Name}}</ion-nav-title>
+  <ion-content>
+    <h1>Its a ping pong game!!</h1>
+
+    <div class="card">
+          <div class="item item-divider">
+            Team Settings
+          </div>
+          <div class="item item-text-wrap">
+
+            <div class="list">
+
+              <p class="item item-icon-left">
+                <i class="icon ion-person-stalker"></i>
+                Team 1
+                <div class="list">
+                  <label class="item item-input">
+                    <span class="input-label">Team Name</span>
+                    <input type="text" placeholder="Team Name Here" ng-model="settings.team1Name">
+                  </label>
+                </div>
+              </p>
+
+              <p class="item item-icon-left">
+                <i class="icon ion-person-stalker"></i>
+                Team 2
+                <div class="list">
+                  <label class="item item-input">
+                    <span class="input-label">Team Name</span>
+                    <input type="text" placeholder="Team Name Here" ng-model="settings.team2Name">
+                  </label>
+                </div>
+              </p>
+
+            </div>
+
+      </div>
+
+      </div>
+
+  </ion-content>
+</ion-view>
