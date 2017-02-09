@@ -51,7 +51,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     controller: 'ScoreKeeperAppCtrl'
   })
 
-  // My custom states
+  // --------- My custom states -------------
+
+  // My main route - about page
   .state('app.about', {
     url: '/about',
     views: {
@@ -61,11 +63,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     }
   })
 
+  // list logged in users hosted games
   .state('app.myGames', {
     url: '/myGames',
     views: {
       'menuContent': {
-        templateUrl: 'templates/myGames.html'
+        templateUrl: 'templates/myGames.html',
+        controller: 'UserHostedGameListCtrl'
       }
     }
   })
@@ -91,7 +95,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     }
   })
 
-  // Particular Game Routes Here
+  // Particular Game Route
   .state('app.pingPongGame', {
     url: '/liveGames/pingPong/:id',
     views: {
@@ -102,8 +106,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     }
   })
 
-  // Other Partial routes Below here
-
+  // Live games partial route
   .state('app.liveGames', {
     url: '/liveGames',
     views: {

@@ -1,43 +1,51 @@
 <ion-view>
   <ion-nav-title>{{currentGame.team1Name}} vs {{currentGame.team2Name}}</ion-nav-title>
   <ion-content>
-    <h1>Its a ping pong game!!</h1>
 
     <div class="card">
-          <div class="item item-divider">
-            Team Settings
-          </div>
+
+      <div class="item item-divider">Score</div>
+
+      <div class="row">
+
+        <div class="col">
+          <div class="item item-divider">{{currentGame.team1Name}}</div>
+
           <div class="item item-text-wrap">
+            {{currentGame.team1Points}}
+          </div>
+        </div>
 
-            <div class="list">
+        <div class="col">
+          <div class="item item-divider">{{currentGame.team2Name}}</div>
 
-              <p class="item item-icon-left">
-                <i class="icon ion-person-stalker"></i>
-                Team 1
-                <div class="list">
-                  <label class="item item-input">
-                    <span class="input-label">Team Name</span>
-                    <input type="text" placeholder="Team Name Here" ng-model="settings.team1Name">
-                  </label>
-                </div>
-              </p>
+          <div class="item item-text-wrap">
+            {{currentGame.team2Points}}
+          </div>
+        </div>
 
-              <p class="item item-icon-left">
-                <i class="icon ion-person-stalker"></i>
-                Team 2
-                <div class="list">
-                  <label class="item item-input">
-                    <span class="input-label">Team Name</span>
-                    <input type="text" placeholder="Team Name Here" ng-model="settings.team2Name">
-                  </label>
-                </div>
-              </p>
+      </div> <!-- close score row -->
 
-            </div>
+    </div>
 
-      </div>
+    <div class="card">
 
-      </div>
+      <div class="item item-divider">Current Server</div>
+
+      <div class="item item-text-wrap">someone go already</div>
+
+    </div>
+
+    <div class="card">
+
+      <div class="item item-divider">Listen stuff</div>
+
+      <button class="button button-positive">Listen Live</button>
+      <button class="button button-assertive">Stop Stream</button>
+
+      wot this doesnt work
+
+    </div>
 
   </ion-content>
 </ion-view>

@@ -129,7 +129,8 @@ angular.module('starter.controllers', [])
       "team2Name": $scope.settings.team2Name,
       "team1Points": 0,
       "team2Points": 0,
-      "gameTypeLinkName": "pingPong"
+      "gameTypeLinkName": "pingPong",
+      "gameHostUid": "uid123"
     }
 
     console.log("gameInfo object", gameInfo)
@@ -172,20 +173,47 @@ angular.module('starter.controllers', [])
   // store stateParam to make get request
   let gameId = $stateParams.id
 
-  $scope.test = "test"
+  // $scope.test = "test"
   // scope variable to store game object
-  $scope.currentGame
+  // $scope.currentGame
 
   // get the particular games information from firebase and store it
   LiveGamesFactory.getParticularGame(gameId)
     .then((game)=>{
       $scope.currentGame = game;
       console.log("scope game", $scope.currentGame)
+    })
 
-      console.log("team 1", $scope.currentGame.team1Name)
-      console.log("team 2", $scope.currentGame.team2Name)
+  // change game scores or current server when changed
+  rootDatabase.ref(`currentGames/${gameId}`).on('child_changed', ()=>{
+    LiveGamesFactory.getParticularGame(gameId)
+    .then((game)=>{
+      $scope.currentGame = game;
+      console.log("changed game", $scope.currentGame)
       $scope.$apply()
     })
+  })
+
+
+
+})
+
+// List a users hosted games partial controll
+.controller('UserHostedGameListCtrl', function($scope, LiveGamesFactory) {
+
+  // // store stateParam to make get request
+  // let gameId = $stateParams.id
+
+  // $scope.test = "test"
+  // // scope variable to store game object
+  // $scope.currentGame
+
+  // // get the particular games information from firebase and store it
+  // LiveGamesFactory.getParticularGame(gameId)
+  //   .then((game)=>{
+  //     $scope.currentGame = game;
+  //     console.log("scope game", $scope.currentGame)
+  //   })
 
 
 
