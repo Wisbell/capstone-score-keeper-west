@@ -1,5 +1,6 @@
 angular.module('starter.factories', [])
 
+// Create Game Factory
 .factory('CreateGameFactory', function($http){
 
   return {
@@ -29,11 +30,33 @@ angular.module('starter.factories', [])
             createNewGame: function(createGame){
                       console.log("createNewGame function called from factory")
                       console.log(createGame)
-                      return createGame
+                      return currentGamesRef.push(createGame)
                     }
-          } // Close return statement
+          } // Close factory return statement
 })
 
+
+// Live Games Factory
+.factory('LiveGamesFactory', function($http){
+
+  return {
+            getCurrentGameList: function(){
+                      return currentGamesRef.once('value')
+                        .then((snap) => snap.val())
+                        .then((currentGamesList) => {
+                          console.log("currentGamesList", currentGamesList)
+                          return currentGamesList
+                        })
+                    },
+
+            getParticularGame: function(gameId){
+                      return rootDatabase.ref(`currentGames/${gameId}`).once('value')
+                        .then((snap)=> {
+                          return snap.val()
+                        })
+                    }
+          } // Close factory return statement
+})
 
 
 

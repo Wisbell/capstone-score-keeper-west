@@ -60,29 +60,29 @@ angular.module('starter.controllers', [])
 .controller('CreateGameCtrl', function($scope, CreateGameFactory) {
 
   // get list of game names to choose from
-  CreateGameFactory.getGameNameList()
-    .then((nameList) => {
-      $scope.gameNameList = nameList
-      $scope.selectedGame = $scope.gameNameList[0]
-    })
+  // CreateGameFactory.getGameNameList()
+  //   .then((nameList) => {
+  //     $scope.gameNameList = nameList
+  //     $scope.selectedGame = $scope.gameNameList[0]
+  //   })
 
-  // Object to store info from create game partial
-  $scope.gameInfo = {
-      gameName: '',
+  // // Object to store info from create game partial
+  // $scope.gameInfo = {
+  //     gameName: '',
 
-      team1: '',
-      team2: ''
-    }
+  //     team1: '',
+  //     team2: ''
+  //   }
 
 
-  $scope.submitGameButton = () => {
-    console.log("submit button clicked")
+  // $scope.submitGameButton = () => {
+  //   console.log("submit button clicked")
 
-    // gameInfo.gameName = $scope.gameName
+  //   // gameInfo.gameName = $scope.gameName
 
-    // console.log($scope.createForm.gameName)
-    console.log($scope.gameInfo.gameName)
-  }
+  //   // console.log($scope.createForm.gameName)
+  //   console.log($scope.gameInfo.gameName)
+  // }
 })
 
 
@@ -120,6 +120,7 @@ angular.module('starter.controllers', [])
 
     let gameInfo = {
       "gameType": "Ping Pong",
+      "gamePicUrl": "img/ping-pong.jpeg",
       "gameName": $scope.settings.gameName,
       "numPlayers": $scope.settings.playerChoice,
       "winningScore": $scope.winningScore,
@@ -127,13 +128,65 @@ angular.module('starter.controllers', [])
       "team1Name": $scope.settings.team1Name,
       "team2Name": $scope.settings.team2Name,
       "team1Points": 0,
-      "team2Points": 0
+      "team2Points": 0,
+      "gameTypeLinkName": "pingPong"
     }
 
     console.log("gameInfo object", gameInfo)
 
-    CreateGameFactory.createNewGame(JSON.stringify(gameInfo))
+    // Don't use JSON.stringify
+    // Change this to firebase realtime .post()
+    CreateGameFactory.createNewGame(gameInfo)
   }
+})
+
+// Live Games List Controller
+.controller('LiveGamesCtrl', function($scope, LiveGamesFactory) {
+
+  console.log("lives games ctrl loaded")
+
+  currentGamesRef.on('child_added', ()=>{
+    console.log("child_added")
+    LiveGamesFactory.getCurrentGameList()
+    .then((gameList) => {
+      $scope.currentGames = gameList
+      // $scope.selectedGame = $scope.gameNameList[0]
+      $scope.$apply()
+    })
+  })
+
+  currentGamesRef.on('child_removed', ()=>{
+    console.log("child_removed")
+    LiveGamesFactory.getCurrentGameList()
+    .then((gameList) => {
+      $scope.currentGames = gameList
+      // $scope.selectedGame = $scope.gameNameList[0]
+      $scope.$apply()
+    })
+  })
+})
+
+// PingPong Game Controller
+.controller('PingPongGameCtrl', function($scope, LiveGamesFactory, $stateParams) {
+
+  // store stateParam to make get request
+  let gameId = $stateParams.id
+
+  $scope.test = "test"
+  // scope variable to store game object
+  $scope.currentGame
+
+  // get the particular games information from firebase and store it
+  LiveGamesFactory.getParticularGame(gameId)
+    .then((game)=>{
+      $scope.currentGame = game;
+      console.log("scope game", $scope.currentGame)
+
+      console.log("team 1", $scope.currentGame.team1Name)
+      console.log("team 2", $scope.currentGame.team2Name)
+      $scope.$apply()
+    })
+
 
 
 });

@@ -3,5 +3,17 @@
     <h1>Live Games currently being played</h1>
 
     <p>List current game someone is hosting</p>
+
+    <div class="list liveGameDiv">
+
+      <a ng-repeat="(key, value) in currentGames" class="item item-thumbnail-left" href="#/app/liveGames/{{value.gameTypeLinkName}}/{{key}}">
+        <img src="{{value.gamePicUrl}}">
+        <h2>{{value.gameName}}</h2>
+        <p>{{value.gameType}}</p>
+        <p>{{value.team1Name}} vs {{value.team2Name}}</p>
+      </a>
+
+    </div>
+
   </ion-content>
 </ion-view>

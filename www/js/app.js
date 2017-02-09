@@ -11,9 +11,13 @@ var config = {
 firebase.initializeApp(config);
 
 // Database References
-
+const rootDatabase = firebase.database()
 const gameSettingsRef = firebase.database().ref('gameSettings')
-// const currentGamesRef = firebase.database.ref('currentGames')
+const currentGamesRef = firebase.database().ref('currentGames')
+
+// Database Real Time Event Listeners
+// currentGamesRef.on('child_added', onCreatedGameAddition)
+
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -76,7 +80,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     }
   })
 
-  // Game Routes Below here
+  // Create Game Routes Below here
   .state('app.createPingPong', {
     url: '/createGame/pingPong',
     views: {
@@ -86,13 +90,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
       }
     }
   })
-  // Game Routes End here
+
+  // Particular Game Routes Here
+  .state('app.pingPongGame', {
+    url: '/liveGames/pingPong/:id',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/pingPongGame.html',
+        controller: 'PingPongGameCtrl'
+      }
+    }
+  })
+
+  // Other Partial routes Below here
 
   .state('app.liveGames', {
     url: '/liveGames',
     views: {
       'menuContent': {
-        templateUrl: 'templates/liveGames.html'
+        templateUrl: 'templates/liveGames.html',
+        controller: 'LiveGamesCtrl'
       }
     }
   })
@@ -108,3 +125,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/about');
 });
+
+
+// Notes For Westley - I suffer from KRS, aka "Kant Remember Shit"
+
+// .set()   overwrite
+
+// .update()   just like patch
+
+// .remove()  delete stuffs
+
+//  .push()   like post dummy
