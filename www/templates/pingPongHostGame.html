@@ -1,0 +1,51 @@
+<ion-view>
+  <ion-nav-title>{{currentGame.team1Name}} vs {{currentGame.team2Name}}</ion-nav-title>
+  <ion-content>
+
+    <div class="card">
+
+      <div class="item item-divider">Score</div>
+
+      <div class="row">
+
+        <div class="col">
+          <div class="item item-divider">{{currentGame.team1Name}}</div>
+
+          <div class="item item-text-wrap">
+            {{currentGame.team1Points}}
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="item item-divider">{{currentGame.team2Name}}</div>
+
+          <div class="item item-text-wrap">
+            {{currentGame.team2Points}}
+          </div>
+        </div>
+
+      </div> <!-- close score row -->
+
+    </div>
+
+    <div class="card">
+
+      <div class="item item-divider">Current Server</div>
+
+      <div class="item item-text-wrap">someone go already</div>
+
+    </div>
+
+    <div class="card">
+
+      <div class="item item-divider">Listen stuff</div>
+
+      <button class="button button-positive">Listen Live</button>
+      <button class="button button-assertive">Stop Stream</button>
+
+      wot this doesnt work
+
+    </div>
+
+  </ion-content>
+</ion-view>

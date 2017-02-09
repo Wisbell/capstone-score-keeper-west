@@ -87,7 +87,7 @@ angular.module('starter.controllers', [])
 
 
 // Ping Pong Create Game Controller
-.controller('CreatePingPongCtrl', function($scope, CreateGameFactory) {
+.controller('CreatePingPongCtrl', function($scope, CreateGameFactory, $location) {
 
   // this object allows the ability to set gameChocie scope variable
   $scope.settings = {}
@@ -136,8 +136,8 @@ angular.module('starter.controllers', [])
     console.log("gameInfo object", gameInfo)
 
     // Don't use JSON.stringify
-    // Change this to firebase realtime .post()
     CreateGameFactory.createNewGame(gameInfo)
+      .then($location.url(`/app/myGames/pingPong/${gameInfo.key}`))
   }
 })
 

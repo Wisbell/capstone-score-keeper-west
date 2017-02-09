@@ -73,7 +73,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
       }
     }
   })
-
+  // logged in users particular game
+  .state('app.myGamesPingPong', {
+    url: '/myGames/pingPong/:id',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/pingPongHostGame.html',
+        controller: 'UserHostedGameListCtrl'
+      }
+    }
+  })
+  // show a list of all games able to be created
   .state('app.createGame', {
     url: '/createGame',
     views: {
