@@ -31,6 +31,10 @@ angular.module('starter.factories', [])
                       console.log("createNewGame function called from factory")
                       console.log(createGame)
                       return currentGamesRef.push(createGame)
+                        // .then((snap)=>{
+                        //   console.log("key?", snap.key)
+                        //   return snap.key
+                        // })
                     }
           } // Close factory return statement
 })

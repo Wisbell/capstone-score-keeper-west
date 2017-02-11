@@ -14,6 +14,15 @@
           <div class="item item-text-wrap">
             {{currentGame.team1Points}}
           </div>
+
+          <div class="item item-divider">Change Team 1 Score</div>
+
+          <div class="item item-text-wrap">
+            <!-- Team 1 increment score -->
+            <button class="button button-stable ion-plus" ng-click="incrementScoreTeamOne()"></button>
+            <!-- Team 1 decrement score -->
+            <button class="button button-stable ion-minus" ng-click="decrementScoreTeamOne()"></button>
+          </div>
         </div>
 
         <div class="col">
@@ -21,6 +30,14 @@
 
           <div class="item item-text-wrap">
             {{currentGame.team2Points}}
+          </div>
+
+          <div class="item item-divider">Change Team 2 Score</div>
+          <div class="item item-text-wrap">
+            <!-- Team 2 increment score -->
+            <button class="button button-stable ion-plus" ng-click="incrementScoreTeamTwo()"></button>
+            <!-- Team 2 increment score  -->
+            <button class="button button-stable ion-minus" ng-click="decrementScoreTeamTwo()"></button>
           </div>
         </div>
 

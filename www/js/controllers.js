@@ -118,6 +118,8 @@ angular.module('starter.controllers', [])
   $scope.createGameButton = () => {
     console.log("createGameButton clicked")
 
+    let gameKey
+
     let gameInfo = {
       "gameType": "Ping Pong",
       "gamePicUrl": "img/ping-pong.jpeg",
@@ -137,7 +139,20 @@ angular.module('starter.controllers', [])
 
     // Don't use JSON.stringify
     CreateGameFactory.createNewGame(gameInfo)
-      .then($location.url(`/app/myGames/pingPong/${gameInfo.key}`))
+      .then((snap)=>{
+        // console.log("snap", snap)
+        // console.log("snap key", snap.key)
+        // // console.log("key11", snap.key)
+        // // how i get the crazy key
+
+        gameKey = snap.key
+        console.log("gameKey", gameKey)
+      })
+      .then(()=>{
+        // console.log("gameKey - 2", gameKey)
+        $location.url(`/app/myGames/pingPong/${gameKey}`)
+        $scope.$apply()
+      })
   }
 })
 
@@ -167,7 +182,7 @@ angular.module('starter.controllers', [])
   })
 })
 
-// PingPong Game Controller
+// PingPong Game Controller - Watching a game
 .controller('PingPongGameCtrl', function($scope, LiveGamesFactory, $stateParams) {
 
   // store stateParam to make get request
@@ -193,28 +208,130 @@ angular.module('starter.controllers', [])
       $scope.$apply()
     })
   })
+})
 
 
+// PingPong Game Controller - Hosting a game
+.controller('HostPingPongGame', function($scope, LiveGamesFactory, $stateParams) {
+
+  // store stateParam to make get request
+  let gameId = $stateParams.id
+
+  // $scope.test = "test"
+  // scope variable to store game object
+  // $scope.currentGame
+
+  // get the particular games information from firebase and store it
+  LiveGamesFactory.getParticularGame(gameId)
+    .then((game)=>{
+      $scope.currentGame = game;
+      console.log("scope game", $scope.currentGame)
+    })
+
+  // change game scores or current server when changed
+  rootDatabase.ref(`currentGames/${gameId}`).on('child_changed', ()=>{
+    LiveGamesFactory.getParticularGame(gameId)
+    .then((game)=>{
+      $scope.currentGame = game;
+      console.log("changed game", $scope.currentGame)
+      $scope.$apply()
+    })
+  })
+
+  console.log("did this load")
+
+  $scope.incrementScoreTeamOne = function(){
+    console.log("increment team one score function called")
+
+    $scope.teamOneScore
+
+    rootDatabase.ref(`currentGames/${gameId}/team1Points`).once('value')
+      .then((snap)=> {
+        // console.log('test')
+        console.log('snap', snap.val())
+        $scope.teamOneScore = snap.val()
+        $scope.teamOneScore = $scope.teamOneScore + 1
+        console.log($scope.teamOneScore)
+
+        rootDatabase.ref(`currentGames/${gameId}/`).update({"team1Points": $scope.teamOneScore})
+        // return snap.val()
+      })
+  }
+
+  $scope.decrementScoreTeamOne = function(){
+    console.log("decrement team one score function called")
+
+    $scope.teamOneScore
+
+    rootDatabase.ref(`currentGames/${gameId}/team1Points`).once('value')
+      .then((snap)=> {
+        // console.log('test')
+        console.log('snap', snap.val())
+        $scope.teamOneScore = snap.val()
+        $scope.teamOneScore = $scope.teamOneScore - 1
+        console.log($scope.teamOneScore)
+
+        rootDatabase.ref(`currentGames/${gameId}/`).update({"team1Points": $scope.teamOneScore})
+        // return snap.val()
+      })
+  }
+
+  $scope.incrementScoreTeamTwo = function(){
+    console.log("increment team two score function called")
+
+    $scope.teamTwoScore
+    console.log('teamTwoScore initally', $scope.teamTwoScore)
+
+    rootDatabase.ref(`currentGames/${gameId}/team2Points`).once('value')
+      .then((snap)=> {
+        // console.log('test')
+        console.log('snap', snap.val())
+        $scope.teamTwoScore = snap.val()
+        $scope.teamTwoScore = $scope.teamTwoScore + 1
+        console.log("updated team two score", $scope.teamTwoScore)
+
+        rootDatabase.ref(`currentGames/${gameId}/`).update({"team2Points": $scope.teamTwoScore})
+        // return snap.val()
+      })
+  }
+
+  $scope.decrementScoreTeamTwo = function(){
+    console.log("decrement team two score function called")
+
+    $scope.teamTwoScore
+    console.log('teamTwoScore initally', $scope.teamTwoScore)
+
+    rootDatabase.ref(`currentGames/${gameId}/team2Points`).once('value')
+      .then((snap)=> {
+        // console.log('test')
+        console.log('snap', snap.val())
+        $scope.teamTwoScore = snap.val()
+        $scope.teamTwoScore = $scope.teamTwoScore - 1
+        console.log("updated team two score", $scope.teamTwoScore)
+
+        rootDatabase.ref(`currentGames/${gameId}/`).update({"team2Points": $scope.teamTwoScore})
+        // return snap.val()
+      })
+  }
 
 })
 
+// IN TESTING  ----------------------------------
 // List a users hosted games partial controll
-.controller('UserHostedGameListCtrl', function($scope, LiveGamesFactory) {
+.controller('UserHostedGameListCtrl', function($scope, LiveGamesFactory, $stateParams) {
 
-  // // store stateParam to make get request
-  // let gameId = $stateParams.id
+  let gameId = $stateParams.id
 
-  // $scope.test = "test"
-  // // scope variable to store game object
-  // $scope.currentGame
+  // get the particular games information from firebase and store it
+  LiveGamesFactory.getParticularGame(gameId)
+    .then((game)=>{
+      $scope.currentGame = game;
+      console.log("scope game", $scope.currentGame)
+    })
 
-  // // get the particular games information from firebase and store it
-  // LiveGamesFactory.getParticularGame(gameId)
-  //   .then((game)=>{
-  //     $scope.currentGame = game;
-  //     console.log("scope game", $scope.currentGame)
-  //   })
 
+    // make increment and decrement score functions
+    // with real time changes
 
 
 });
