@@ -29,7 +29,7 @@ angular.module('starter.factories', [])
                     },
             createNewGame: function(createGame){
                       console.log("createNewGame function called from factory")
-                      console.log(createGame)
+                      console.log("create game object", createGame)
                       return currentGamesRef.push(createGame)
                         // .then((snap)=>{
                         //   console.log("key?", snap.key)
@@ -55,6 +55,12 @@ angular.module('starter.factories', [])
 
             getParticularGame: function(gameId){
                       return rootDatabase.ref(`currentGames/${gameId}`).once('value')
+                        .then((snap)=> {
+                          return snap.val()
+                        })
+                    },
+            getAllHostGames: function(hostUid){
+                      return currentGamesRef.orderByChild('gameHostUid').equalTo(hostUid).once('value')
                         .then((snap)=> {
                           return snap.val()
                         })

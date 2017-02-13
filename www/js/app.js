@@ -69,7 +69,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     views: {
       'menuContent': {
         templateUrl: 'templates/myGames.html',
-        controller: 'UserHostedGameListCtrl'
+        controller: 'UserGameListCtrl'
       }
     }
   })

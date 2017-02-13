@@ -33,6 +33,8 @@ angular.module('starter.controllers', [])
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
 
+    firebase.auth().signInWithEmailAndPassword($scope.loginData.username, $scope.loginData.password)
+
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
     $timeout(function() {
@@ -120,6 +122,7 @@ angular.module('starter.controllers', [])
 
     let gameKey
 
+    // gameId is null on default because the id isn't created until it is posted to firebase
     let gameInfo = {
       "gameType": "Ping Pong",
       "gamePicUrl": "img/ping-pong.jpeg",
@@ -132,7 +135,8 @@ angular.module('starter.controllers', [])
       "team1Points": 0,
       "team2Points": 0,
       "gameTypeLinkName": "pingPong",
-      "gameHostUid": "uid123"
+      "gameHostUid": firebase.auth().currentUser.uid,
+      "gameId": null
     }
 
     console.log("gameInfo object", gameInfo)
@@ -140,16 +144,15 @@ angular.module('starter.controllers', [])
     // Don't use JSON.stringify
     CreateGameFactory.createNewGame(gameInfo)
       .then((snap)=>{
-        // console.log("snap", snap)
-        // console.log("snap key", snap.key)
-        // // console.log("key11", snap.key)
-        // // how i get the crazy key
-
+        // get key of newly created game object
         gameKey = snap.key
-        console.log("gameKey", gameKey)
+
+        // update game object with parent key as a gameId
+        firebase.database().ref(`currentGames/${gameKey}`).update({
+          "gameId": gameKey
+        })
       })
       .then(()=>{
-        // console.log("gameKey - 2", gameKey)
         $location.url(`/app/myGames/pingPong/${gameKey}`)
         $scope.$apply()
       })
@@ -318,17 +321,24 @@ angular.module('starter.controllers', [])
 
 // IN TESTING  ----------------------------------
 // List a users hosted games partial controll
-.controller('UserHostedGameListCtrl', function($scope, LiveGamesFactory, $stateParams) {
+.controller('UserGameListCtrl', function($scope, LiveGamesFactory, $stateParams) {
 
   let gameId = $stateParams.id
+  let hostUid = firebase.auth().currentUser.uid
 
-  // get the particular games information from firebase and store it
-  LiveGamesFactory.getParticularGame(gameId)
-    .then((game)=>{
-      $scope.currentGame = game;
-      console.log("scope game", $scope.currentGame)
+  $scope.liveGameList
+
+  currentGamesRef.on('child_added', (snap)=>{
+
+    LiveGamesFactory.getAllHostGames(hostUid)
+    .then((hostGameList)=>{
+      $scope.liveGameList = hostGameList
+      console.log("liveGameList", $scope.liveGameList)
+      console.log("liveGameList", $scope.liveGameList.gameId)
+
+      $scope.$apply()
     })
-
+  })
 
     // make increment and decrement score functions
     // with real time changes
