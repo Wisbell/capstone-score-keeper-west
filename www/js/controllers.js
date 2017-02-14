@@ -184,7 +184,9 @@ angular.module('starter.controllers', [])
       "team2Points": 0,
       "gameTypeLinkName": "pingPong",
       "gameHostUid": firebase.auth().currentUser.uid,
-      "gameId": null
+      "gameId": false,
+      "gameOver": false,
+      "winningTeam": false
     }
 
     console.log("gameInfo object", gameInfo)
@@ -263,10 +265,11 @@ angular.module('starter.controllers', [])
 
 
 // PingPong Game Controller - Hosting a game
-.controller('HostPingPongGame', function($scope, LiveGamesFactory, $stateParams) {
+.controller('HostPingPongGame', function($scope, LiveGamesFactory, $stateParams, $ionicModal) {
 
   // store stateParam to make get request
   let gameId = $stateParams.id
+  // $scope.winningScore
 
   // $scope.test = "test"
   // scope variable to store game object
@@ -285,11 +288,14 @@ angular.module('starter.controllers', [])
     .then((game)=>{
       $scope.currentGame = game;
       console.log("changed game", $scope.currentGame)
+      // console.log("team 1 points", $scope.currentGame.team1Points)
+      // console.log("team 2 points", $scope.currentGame.team2Points)
+
       $scope.$apply()
     })
+    // check for a winner when the game is changed
+    .then(()=>{$scope.checkWinner()})
   })
-
-  console.log("did this load")
 
   $scope.incrementScoreTeamOne = function(){
     console.log("increment team one score function called")
@@ -302,11 +308,12 @@ angular.module('starter.controllers', [])
         console.log('snap', snap.val())
         $scope.teamOneScore = snap.val()
         $scope.teamOneScore = $scope.teamOneScore + 1
-        console.log($scope.teamOneScore)
+        console.log("team one score increment", $scope.teamOneScore)
 
         rootDatabase.ref(`currentGames/${gameId}/`).update({"team1Points": $scope.teamOneScore})
         // return snap.val()
       })
+      // .then(()=>{$scope.checkWinner()})
   }
 
   $scope.decrementScoreTeamOne = function(){
@@ -349,6 +356,7 @@ angular.module('starter.controllers', [])
         rootDatabase.ref(`currentGames/${gameId}/`).update({"team2Points": $scope.teamTwoScore})
         // return snap.val()
       })
+      // .then(()=>{$scope.checkWinner()})
   }
 
   $scope.decrementScoreTeamTwo = function(){
@@ -373,7 +381,55 @@ angular.module('starter.controllers', [])
       })
   }
 
-})
+  $scope.checkWinner = function(){
+    console.log("checkWinner function called")
+    // grab winning score
+    let winningScore = $scope.currentGame.winningScore
+    // get score of both teams
+    let teamOneScore = $scope.currentGame.team1Points// + 1
+    console.log("team one score", teamOneScore)
+    let teamTwoScore = $scope.currentGame.team2Points// + 1
+    console.log("team two score", teamTwoScore)
+    // check team 1 score to winning score
+    if(teamOneScore == winningScore){
+      console.log("team one won")
+      // update winningTeam variable on firebase
+      rootDatabase.ref(`currentGames/${gameId}/`).update({"winningTeam": $scope.currentGame.team1Name})
+      // ask host to end game
+
+      // if host ends game change game over value on firebase
+      rootDatabase.ref(`currentGames/${gameId}/`).update({"gameOver": true})
+    }
+    // check team 2 score to winning score
+    else if(teamTwoScore == winningScore){
+      console.log("team two won")
+
+      // rootDatabase.ref(`currentGames/${gameId}/`).update({"winningTeam": $scope.team2Name})
+
+      rootDatabase.ref(`currentGames/${gameId}/`).update({"gameOver": true})
+    } else {
+      console.log("no one won")
+      // reset gameOver value in firebase
+      rootDatabase.ref(`currentGames/${gameId}/`).update({"gameOver": false})
+
+      // reset winning team value in firebase
+      rootDatabase.ref(`currentGames/${gameId}/`).update({"winningTeam": ""})
+    }
+  }
+
+  // winner modal
+  $ionicModal.fromTemplateUrl('templates/pingPongWinnerModal.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.winnerModal = modal;
+  });
+
+  $scope.createContact = function(u) {
+    $scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
+    $scope.winnerModal.hide();
+  };
+
+}) // Close Ping Pong Host Controller
 
 // IN TESTING  ----------------------------------
 // List a users hosted games partial controll
