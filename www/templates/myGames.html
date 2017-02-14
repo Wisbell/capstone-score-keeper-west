@@ -6,11 +6,11 @@
         Your Live Games
       </div>
 
-      <a ng-repeat="game in liveGameList" href="#/app/myGames/pingPong/{{game.gameId}}">
+      <a ng-repeat="game in liveGameList" href="#/app/myGames/{{game.gameTypeLinkName}}/{{game.gameId}}">
         <div class="item item-avatar">
           <img src="{{game.gamePicUrl}}">
-          <h2>{{game.gameType}}</h2>
-          <p>Its in the Olympics. Seriously!</p>
+          <h2>{{game.gameName}} - {{game.team1Name}} vs {{game.team2Name}}</h2>
+          <p>{{game.gameType}}</p>
         </div>
       </a>
     </div>

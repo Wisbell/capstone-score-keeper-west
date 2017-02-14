@@ -22,6 +22,7 @@
           About
         </ion-item>
         <ion-item menu-close ng-click="login()">
+          <!-- need ng hide? -->
           Login/Register
         </ion-item>
         <ion-item menu-close href="#/app/myGames">
@@ -35,6 +36,10 @@
         </ion-item>
         <ion-item menu-close href="#/app/pastGames">
           Past Games
+        </ion-item>
+        <ion-item menu-close ng-click="signOut()">
+        <!-- need ng hide -->
+          Log Out
         </ion-item>
       </ion-list>
     </ion-content>

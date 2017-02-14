@@ -11,22 +11,23 @@ angular.module('starter.controllers', [])
 
   // Form data for the login modal
   $scope.loginData = {};
+  $scope.registerData = {};
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
   }).then(function(modal) {
-    $scope.modal = modal;
+    $scope.loginModal = modal;
   });
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
-    $scope.modal.hide();
+    $scope.loginModal.hide();
   };
 
   // Open the login modal
   $scope.login = function() {
-    $scope.modal.show();
+    $scope.loginModal.show();
   };
 
   // Perform the login action when the user submits the login form
@@ -41,7 +42,54 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+
+  // -------------------- //
+  // Register Modal below //
+  // -------------------- //
+
+  $ionicModal.fromTemplateUrl('templates/register.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.registerModal = modal;
+  });
+
+  // Triggered in the register modal to close it
+  $scope.closeRegister = function() {
+    $scope.registerModal.hide();
+  };
+
+  // Open the register modal
+  $scope.register = function() {
+    $scope.registerModal.show();
+    $scope.loginModal.hide();
+  };
+
+  // Perform the register action when the user submits the register form
+  $scope.doRegister = function() {
+    console.log('Doing register', $scope.registerData);
+
+    // firebase.auth().signInWithEmailAndPassword($scope.loginData.username, $scope.loginData.password)
+
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
+    $timeout(function() {
+      $scope.closeRegister();
+    }, 1000);
+  };
+
+  // sign out function
+  $scope.signOut = function() {
+    console.log("sign out function called")
+    firebase.auth().signOut()
+  }
+
+  // store uid
+  // const uid = firebase.auth().currentUser.uid;
+  // console.log("uid", uid)
+
+
 })
+
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
@@ -270,12 +318,17 @@ angular.module('starter.controllers', [])
       .then((snap)=> {
         // console.log('test')
         console.log('snap', snap.val())
-        $scope.teamOneScore = snap.val()
-        $scope.teamOneScore = $scope.teamOneScore - 1
-        console.log($scope.teamOneScore)
 
-        rootDatabase.ref(`currentGames/${gameId}/`).update({"team1Points": $scope.teamOneScore})
-        // return snap.val()
+        if(snap.val() >= 1){
+          $scope.teamOneScore = snap.val()
+          $scope.teamOneScore = $scope.teamOneScore - 1
+          console.log($scope.teamOneScore)
+
+          rootDatabase.ref(`currentGames/${gameId}/`).update({"team1Points": $scope.teamOneScore})
+          // return snap.val()
+        } else {
+          console.log("score cannot be less than 0")
+        }
       })
   }
 
@@ -308,12 +361,15 @@ angular.module('starter.controllers', [])
       .then((snap)=> {
         // console.log('test')
         console.log('snap', snap.val())
-        $scope.teamTwoScore = snap.val()
-        $scope.teamTwoScore = $scope.teamTwoScore - 1
-        console.log("updated team two score", $scope.teamTwoScore)
 
-        rootDatabase.ref(`currentGames/${gameId}/`).update({"team2Points": $scope.teamTwoScore})
-        // return snap.val()
+        if(snap.val() >= 1){
+          $scope.teamTwoScore = snap.val()
+          $scope.teamTwoScore = $scope.teamTwoScore - 1
+          console.log("updated team two score", $scope.teamTwoScore)
+
+          rootDatabase.ref(`currentGames/${gameId}/`).update({"team2Points": $scope.teamTwoScore})
+          // return snap.val()
+        }
       })
   }
 

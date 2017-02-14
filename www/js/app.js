@@ -15,6 +15,19 @@ const rootDatabase = firebase.database()
 const gameSettingsRef = firebase.database().ref('gameSettings')
 const currentGamesRef = firebase.database().ref('currentGames')
 
+// firebase auth id
+// var uid = null;
+
+// firebase.auth().onAuthStateChanged(function(user) {
+//   console.log("auth state changed")
+//   if (user) {
+//     // User is signed in.
+//     uid = firebase.auth().currentUser.uid;
+//   } else {
+//     uid = null;
+//   }
+// });
+
 // Database Real Time Event Listeners
 // currentGamesRef.on('child_added', onCreatedGameAddition)
 
