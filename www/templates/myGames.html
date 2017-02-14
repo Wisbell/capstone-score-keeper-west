@@ -15,16 +15,18 @@
       </a>
     </div>
 
-    <div class="card">
+    <div class="card list">
       <div class="item item-divider">
-        Your Live Games Test
+        Your Past Games
       </div>
-      <div class="item item-text-wrap">
-        ng repeat the users live games they are hosting
-      </div>
-      <div class="item item-divider">
-        I'm a Footer in a Card!
-      </div>
+
+      <!-- <a ng-repeat="game in liveGameList" href="#/app/myGames/{{game.gameTypeLinkName}}/{{game.gameId}}">
+        <div class="item item-avatar">
+          <img src="{{game.gamePicUrl}}">
+          <h2>{{game.gameName}} - {{game.team1Name}} vs {{game.team2Name}}</h2>
+          <p>{{game.gameType}}</p>
+        </div>
+      </a> -->
     </div>
 
     <ul>
