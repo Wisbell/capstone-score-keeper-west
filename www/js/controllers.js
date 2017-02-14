@@ -221,7 +221,7 @@ angular.module('starter.controllers', [])
 })
 
 // PingPong Game Controller - Watching a game
-.controller('PingPongGameCtrl', function($scope, LiveGamesFactory, $stateParams) {
+.controller('PingPongGameCtrl', function($scope, LiveGamesFactory, $stateParams, $ionicModal, $ionicBody, $timeout) {
 
   // store stateParam to make get request
   let gameId = $stateParams.id
@@ -245,7 +245,44 @@ angular.module('starter.controllers', [])
       console.log("changed game", $scope.currentGame)
       $scope.$apply()
     })
+    .then(()=>{$scope.checkWinnerWatchGame()})
   })
+
+  // winner modal
+  $scope.checkWinnerWatchGame = function(){
+    console.log("checkWinnerWatchGame function called")
+
+    if($scope.currentGame.gameOver){
+      // show modal
+      $scope.winnerModal.show()
+    } else {
+      // This time out is necessary to prevent a bug with the modal
+      $timeout(()=>{
+        if(!$scope.currentGame.gameOver){
+          console.log("game over false")
+          $scope.closeWinnerWatcherModal()
+        }
+      }, 100)
+    } // close else
+
+  }
+
+  // winner modal
+  $ionicModal.fromTemplateUrl('templates/pingPongWinnerWatcherModal.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.winnerModal = modal;
+  });
+
+  // close winner modal
+  $scope.closeWinnerWatcherModal = function(){
+    console.log("modal closed 2")
+    $scope.winnerModal.hide()
+    // http://stackoverflow.com/questions/36295476/ionicmodal-disabling-click-events
+    $ionicBody.removeClass('modal-open');
+    $ionicBody.removeClass('popup-open');
+  }
+
 })
 
 

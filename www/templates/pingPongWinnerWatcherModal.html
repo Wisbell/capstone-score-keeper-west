@@ -1,0 +1,66 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Game Complete! Watch Modal Test</h1>
+  <!--   <div class="buttons">
+      <button class="button button-clear" ng-click="closeLogin()">Close</button>
+    </div> -->
+  </ion-header-bar>
+  <ion-content>
+<!-- show game score info
+    show team who won
+
+    two buttons
+    one to continue game
+      just close modal and let host make changes
+    one to end game
+      end game by sending game to past games
+ -->
+
+    <!-- <form ng-submit="doLogin()"> -->
+      <div class="list">
+        <!-- <label class="item item-input">
+          <span class="input-label">Winner</span>
+          <input type="text" ng-model="loginData.username">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="loginData.password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Log in</button>
+        </label> -->
+        <div class="item item-divider">
+          The winner is . . .
+        </div>
+
+        <p class="item">
+          Team {{currentGame.winningTeam}}!
+        </p>
+
+        <div class="item item-divider">
+          Score
+        </div>
+
+        <p class="item">
+          <span>{{currentGame.team1Name}}: </span>{{currentGame.team1Points}}
+        </p>
+
+        <p class="item">
+          <span>{{currentGame.team2Name}}: </span>{{currentGame.team2Points}}
+        </p>
+
+      </div>
+
+      <div class="button-bar">
+        <a class="button button-calm" ng-click="closeWinnerModal()">Wait! Its not over!</a>
+      </div>
+    <!-- </form> -->
+    <!-- Register Button  -->
+   <!--  <div class="list">
+      <label class="item">
+        <span class="item item-input">Not a user?</span>
+        <button class="button button-block button-calm" type="submit" ng-click="register()">Register</button>
+      </label>
+    </div> -->
+  </ion-content>
+</ion-modal-view>
