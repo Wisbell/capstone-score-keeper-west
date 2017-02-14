@@ -91,21 +91,6 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
-
-
 // Create Game Controller
 .controller('CreateGameCtrl', function($scope, CreateGameFactory) {
 
@@ -265,7 +250,7 @@ angular.module('starter.controllers', [])
 
 
 // PingPong Game Controller - Hosting a game
-.controller('HostPingPongGame', function($scope, LiveGamesFactory, $stateParams, $ionicModal) {
+.controller('HostPingPongGame', function($scope, LiveGamesFactory, $stateParams, $ionicModal, $interval, $ionicBody) {
 
   // store stateParam to make get request
   let gameId = $stateParams.id
@@ -396,6 +381,8 @@ angular.module('starter.controllers', [])
       // update winningTeam variable on firebase
       rootDatabase.ref(`currentGames/${gameId}/`).update({"winningTeam": $scope.currentGame.team1Name})
       // ask host to end game
+        // show modal
+      $scope.winnerModal.show()
 
       // if host ends game change game over value on firebase
       rootDatabase.ref(`currentGames/${gameId}/`).update({"gameOver": true})
@@ -404,9 +391,10 @@ angular.module('starter.controllers', [])
     else if(teamTwoScore == winningScore){
       console.log("team two won")
 
-      // rootDatabase.ref(`currentGames/${gameId}/`).update({"winningTeam": $scope.team2Name})
+      rootDatabase.ref(`currentGames/${gameId}/`).update({"winningTeam": $scope.currentGame.team2Name})
 
       rootDatabase.ref(`currentGames/${gameId}/`).update({"gameOver": true})
+      $scope.winnerModal.show()
     } else {
       console.log("no one won")
       // reset gameOver value in firebase
@@ -418,18 +406,21 @@ angular.module('starter.controllers', [])
   }
 
   // winner modal
-  $ionicModal.fromTemplateUrl('templates/pingPongWinnerModal.html', {
+  $ionicModal.fromTemplateUrl('templates/pingPongWinnerHostModal.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.winnerModal = modal;
   });
 
-  $scope.createContact = function(u) {
-    $scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
-    $scope.winnerModal.hide();
-  };
-
+  // close winner modal
+  $scope.closeWinnerModal = function(){
+    $scope.winnerModal.hide()
+    // http://stackoverflow.com/questions/36295476/ionicmodal-disabling-click-events
+    $ionicBody.removeClass('modal-open');
+    $ionicBody.removeClass('popup-open');
+  }
 }) // Close Ping Pong Host Controller
+
 
 // IN TESTING  ----------------------------------
 // List a users hosted games partial controll
