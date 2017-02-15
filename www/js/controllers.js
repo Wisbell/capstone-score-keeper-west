@@ -259,7 +259,7 @@ angular.module('starter.controllers', [])
       // This time out is necessary to prevent a bug with the modal
       $timeout(()=>{
         if(!$scope.currentGame.gameOver){
-          console.log("game over false")
+          // console.log("game over false")
           $scope.closeWinnerWatcherModal()
         }
       }, 100)
@@ -276,7 +276,7 @@ angular.module('starter.controllers', [])
 
   // close winner modal
   $scope.closeWinnerWatcherModal = function(){
-    console.log("modal closed 2")
+    // console.log("modal closed 2")
     $scope.winnerModal.hide()
     // http://stackoverflow.com/questions/36295476/ionicmodal-disabling-click-events
     $ionicBody.removeClass('modal-open');
@@ -287,7 +287,7 @@ angular.module('starter.controllers', [])
 
 
 // PingPong Game Controller - Hosting a game
-.controller('HostPingPongGame', function($scope, LiveGamesFactory, $stateParams, $ionicModal, $interval, $ionicBody) {
+.controller('HostPingPongGame', function($scope, LiveGamesFactory, $stateParams, $ionicModal, $interval, $ionicBody, $location) {
 
   // store stateParam to make get request
   let gameId = $stateParams.id
@@ -456,11 +456,39 @@ angular.module('starter.controllers', [])
     $ionicBody.removeClass('modal-open');
     $ionicBody.removeClass('popup-open');
   }
+
+
+  // make an end game function that moves the game to the past games section of firebase
+  $scope.endGame = function() {
+    console.log("endGame function called")
+
+    // move current game to past games
+
+    // grab current game info
+    rootDatabase.ref(`currentGames/${gameId}/`).once('value')
+      .then((snap)=>{
+        console.log("snap shot yo", snap.val())
+
+        // post object to pastGames
+        rootDatabase.ref(`pastGames/`).push(snap.val())
+      })
+      .then(()=>{
+        // remove game from currentGames
+        rootDatabase.ref(`currentGames/${gameId}/`).remove()
+      })
+      .then(()=>{
+        console.log("did this fire")
+        // close modal
+        $scope.closeWinnerModal()
+        //then go here
+        $location.url(`/app/about`)
+      })
+  }
 }) // Close Ping Pong Host Controller
 
 
 // IN TESTING  ----------------------------------
-// List a users hosted games partial controll
+// List a users hosted games partial controller
 .controller('UserGameListCtrl', function($scope, LiveGamesFactory, $stateParams) {
 
   let gameId = $stateParams.id
