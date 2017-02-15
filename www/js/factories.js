@@ -68,6 +68,21 @@ angular.module('starter.factories', [])
           } // Close factory return statement
 })
 
+// Past Games Factory
+.factory('PastGamesFactory', function($http){
+
+  return {
+            getPastGameList: function(){
+                      return rootDatabase.ref(`pastGames`).once('value')
+                        .then((snap) => snap.val())
+                        .then((pastGamesList) => {
+                          console.log("pastGamesList", pastGamesList)
+                          return pastGamesList
+                        })
+                    }
+          } // Close factory return statement
+})
+
 
 
 

@@ -144,7 +144,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     url: '/pastGames',
     views: {
       'menuContent': {
-        templateUrl: 'templates/pastGames.html'
+        templateUrl: 'templates/pastGames.html',
+        controller: 'PastGamesListCtrl'
       }
     }
   });

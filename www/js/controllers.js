@@ -287,7 +287,7 @@ angular.module('starter.controllers', [])
 
 
 // PingPong Game Controller - Hosting a game
-.controller('HostPingPongGame', function($scope, LiveGamesFactory, $stateParams, $ionicModal, $interval, $ionicBody, $location) {
+.controller('HostPingPongGame', function($scope, $state, $ionicHistory, LiveGamesFactory, $stateParams, $ionicModal, $interval, $ionicBody, $location) {
 
   // store stateParam to make get request
   let gameId = $stateParams.id
@@ -481,13 +481,18 @@ angular.module('starter.controllers', [])
         // close modal
         $scope.closeWinnerModal()
         //then go here
-        $location.url(`/app/about`)
+        // $location.url(`/app/about`, true)
+
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go('app.about')
       })
   }
 }) // Close Ping Pong Host Controller
 
 
-// IN TESTING  ----------------------------------
+
 // List a users hosted games partial controller
 .controller('UserGameListCtrl', function($scope, LiveGamesFactory, $stateParams) {
 
@@ -510,6 +515,35 @@ angular.module('starter.controllers', [])
 
     // make increment and decrement score functions
     // with real time changes
+
+
+})
+
+
+// past games list controller
+.controller('PastGamesListCtrl', function($scope, PastGamesFactory) {
+
+  console.log("lives games ctrl loaded")
+
+  rootDatabase.ref('pastGames').on('child_added', ()=>{
+    console.log("child_added")
+    PastGamesFactory.getPastGameList()
+    .then((gameList) => {
+      $scope.pastGames = gameList
+
+      $scope.$apply()
+    })
+  })
+
+  rootDatabase.ref('pastGames').on('child_removed', ()=>{
+    console.log("child_removed")
+    PastGamesFactory.getPastGameList()
+    .then((gameList) => {
+      $scope.pastGames = gameList
+      // $scope.selectedGame = $scope.gameNameList[0]
+      $scope.$apply()
+    })
+  })
 
 
 });
