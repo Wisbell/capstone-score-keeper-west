@@ -121,6 +121,31 @@ angular.module('starter.controllers', [])
 })
 
 
+// About Page Controller
+.controller('AboutPageCtrl', function($scope, $state, $ionicHistory) {
+
+  $scope.goToCreateGamesPage = function () {
+    console.log("func fired")
+
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
+
+    $state.go(`app.createGame`)
+  }
+
+  $scope.goToLiveGamesPage = function () {
+    console.log("func fired")
+
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
+
+    $state.go(`app.liveGames`)
+  }
+})
+
+
 // Ping Pong Create Game Controller
 .controller('CreatePingPongCtrl', function($scope, CreateGameFactory, $location) {
 
