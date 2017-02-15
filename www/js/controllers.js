@@ -220,8 +220,8 @@ angular.module('starter.controllers', [])
   })
 })
 
-// PingPong Game Controller - Watching a game
-.controller('PingPongGameCtrl', function($scope, LiveGamesFactory, $stateParams, $ionicModal, $ionicBody, $timeout) {
+// PingPong Game Controller - Watching a single game
+.controller('PingPongGameCtrl', function($scope, $state, $ionicHistory, LiveGamesFactory, $stateParams, $ionicModal, $ionicBody, $timeout) {
 
   // store stateParam to make get request
   let gameId = $stateParams.id
@@ -283,6 +283,14 @@ angular.module('starter.controllers', [])
     $ionicBody.removeClass('popup-open');
   }
 
+  $scope.endGameWatcher = function() {
+    $scope.closeWinnerWatcherModal()
+
+    $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go('app.about')
+  }
 })
 
 
