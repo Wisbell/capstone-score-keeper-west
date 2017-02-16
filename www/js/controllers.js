@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('ScoreKeeperAppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('ScoreKeeperAppCtrl', function($scope, $ionicModal, $timeout, AuthFactory, $location, $state, $ionicHistory) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -34,13 +34,14 @@ angular.module('starter.controllers', [])
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
 
-    firebase.auth().signInWithEmailAndPassword($scope.loginData.username, $scope.loginData.password)
+    // firebase.auth().signInWithEmailAndPassword($scope.loginData.username, $scope.loginData.password)
+    AuthFactory.login($scope.loginData.username, $scope.loginData.password)
 
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
     $timeout(function() {
       $scope.closeLogin();
-    }, 1000);
+    }, 500);
   };
 
   // -------------------- //
@@ -80,12 +81,28 @@ angular.module('starter.controllers', [])
   // sign out function
   $scope.signOut = function() {
     console.log("sign out function called")
-    firebase.auth().signOut()
+    // firebase.auth().signOut()
+
+    AuthFactory.signOut()
+
+    // $ionicHistory.nextViewOptions({
+    //   disableBack: true
+    // });
+
+    // $state.go(`app.about`)
+    $location.url('/app/about')
   }
 
   // store uid
   // const uid = firebase.auth().currentUser.uid;
   // console.log("uid", uid)
+
+
+})
+
+
+// login controller to test authentication
+.controller('LoginCtrl', function($scope, AuthFactory) {
 
 
 })
@@ -122,7 +139,11 @@ angular.module('starter.controllers', [])
 
 
 // About Page Controller
-.controller('AboutPageCtrl', function($scope, $state, $ionicHistory) {
+.controller('AboutPageCtrl', function($scope, $state, $ionicHistory, $ionicNavBarDelegate) {
+
+  $scope.$on('$ionicView.enter', function(e) {
+    $ionicNavBarDelegate.showBar(true);
+  });
 
   $scope.goToCreateGamesPage = function () {
     console.log("func fired")
@@ -527,10 +548,11 @@ angular.module('starter.controllers', [])
 
 
 // List a users hosted games partial controller
-.controller('UserGameListCtrl', function($scope, LiveGamesFactory, $stateParams) {
+.controller('UserGameListCtrl', function($scope, LiveGamesFactory, $stateParams, AuthFactory) {
 
   let gameId = $stateParams.id
-  let hostUid = firebase.auth().currentUser.uid
+  let hostUid = AuthFactory.getUserId()
+  // let hostUid = firebase.auth().currentUser.uid
 
   $scope.liveGameList
 
@@ -540,7 +562,7 @@ angular.module('starter.controllers', [])
     .then((hostGameList)=>{
       $scope.liveGameList = hostGameList
       console.log("liveGameList", $scope.liveGameList)
-      console.log("liveGameList", $scope.liveGameList.gameId)
+      // console.log("liveGameList", $scope.liveGameList.gameId)
 
       $scope.$apply()
     })

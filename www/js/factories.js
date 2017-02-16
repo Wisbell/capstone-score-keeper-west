@@ -84,6 +84,56 @@ angular.module('starter.factories', [])
 })
 
 
+// Auth Factory
+.factory('AuthFactory', ($q) => {
+    return {
+      login (email, pass) {
+        // converts native ES6 promise to angular promise so no $scope.$apply needed
+        return $q.resolve(firebase.auth().signInWithEmailAndPassword(email, pass))
+      },
+
+      signOut () {
+        return firebase.auth().signOut()
+      },
+
+      getUserId () {
+        return firebase.auth().currentUser.uid
+      },
+
+      getUser () {
+        console.log("get user func fired")
+        // Joel and Luke are my heroes.  Both Lukes, all lukes.
+        return $q((resolve, reject) => {
+            console.log("please let me see this")
+            const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+              console.log("does this log")
+              unsubscribe();
+              if (user) {
+                console.log("test1")
+                resolve(user.uid);
+              } else {
+                console.log("test2")
+                reject("Not logged in");
+              }
+            }); //end const unsubscribe
+          }); //end return getUser
+        } //end getUser
+      } // close factory return satement
+  }) // end Auth Factory
+
+
+// const checkForAuth = {
+//       checkForAuth ($location) {
+//         // http://stackoverflow.com/questions/37370224/firebase-stop-listening-onauthstatechanged
+//         const authReady = firebase.auth().onAuthStateChanged(user => {
+//           authReady()
+//           if (!user) {
+//             $location.url('/')
+//           }
+//         })
+//       }
+//     }
+
 
 
 // app.factory('DoctorFactory', function($http){

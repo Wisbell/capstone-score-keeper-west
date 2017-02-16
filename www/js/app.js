@@ -28,8 +28,22 @@ const currentGamesRef = firebase.database().ref('currentGames')
 //   }
 // });
 
-// Database Real Time Event Listeners
-// currentGamesRef.on('child_added', onCreatedGameAddition)
+const checkForAuth = {
+      checkForAuth ($state, $ionicHistory, $location) {
+        // http://stackoverflow.com/questions/37370224/firebase-stop-listening-onauthstatechanged
+        const authReady = firebase.auth().onAuthStateChanged(user => {
+          authReady()
+          if (!user) {
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
+
+            // $location.url('/app/myGames/')
+            $state.go('app.myGames')
+          }
+        })
+      }
+    }
 
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -54,14 +68,50 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  // $ionicConfigProvider.views.maxCache(0);
   $stateProvider
+
+  // Auth state to fix substate bugs wit autentication
+  // .state('auth', {
+  //   url: '/auth',
+  //   templateUrl: 'templates/auth.html',
+  //   abstract: true
+  // })
+
+  //  .state('auth.login', {
+  //     url: '/login',
+  //     views: {
+  //       'auth': {
+  //         templateUrl: 'templates/login2.html',
+  //         controller: 'LoginCtrl',
+  //         resolve: {
+  //           user (AuthFactory, $location, $state) {
+  //             return AuthFactory.getUser()
+  //               .then(function(user){
+  //                   $location.url('/app/about')
+  //               })
+  //               .catch(() => $location.url('/auth/login'))
+  //           }
+  //         }
+  //       }
+  //     }
+  //   })
 
   .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'ScoreKeeperAppCtrl'
+    controller: 'ScoreKeeperAppCtrl',
+    resolve: {
+      user (AuthFactory, $location, $state) {
+              return AuthFactory.getUser()
+                .then(function(user){
+                    $location.url('/app/about')
+                })
+                .catch(() => $location.url('/auth/login'))
+            }
+    }
   })
 
   // --------- My custom states -------------
@@ -83,7 +133,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     views: {
       'menuContent': {
         templateUrl: 'templates/myGames.html',
-        controller: 'UserGameListCtrl'
+        controller: 'UserGameListCtrl',
+        resolve: checkForAuth
+        // resolve: {
+        //   user (AuthFactory, $state, $scope, $location) {
+        //     // console.log("does this log")
+        //     return AuthFactory.getUser()
+        //       .then((user)=>{ console.log(user) })
+        //       // .catch(()=>{
+        //       // // does this work
+        //       // console.log("does this work")
+
+        //       // $location.url('/app/about')
+
+        //       // $state.go('app.about')
+
+        //       // $scope.login()
+        //     // })
+        //   }
+        // }
       }
     }
   })
