@@ -90,7 +90,10 @@ angular.module('starter.controllers', [])
     // });
 
     // $state.go(`app.about`)
-    $location.url('/app/about')
+    // $location.url('/app/about')
+
+    // $state.go(`auth.login`)
+    $location.url('/auth/login')
   }
 
   // store uid
@@ -102,8 +105,31 @@ angular.module('starter.controllers', [])
 
 
 // login controller to test authentication
-.controller('LoginCtrl', function($scope, AuthFactory) {
+.controller('LoginCtrl', function($scope, AuthFactory, $location) {
 
+  $scope.loginData = {};
+  $scope.registerData = {};
+
+  $scope.doLogin = (loginData)=>{
+    console.log("doLogin function called")
+    AuthFactory.login($scope.loginData.username, $scope.loginData.password)
+      .then(()=>{
+        $location.url('/app/about')
+      })
+  }
+
+  $scope.goToRegisterPage = () => {
+    $location.url('/auth/register')
+  }
+
+  $scope.doRegister = (registerData)=>{
+    console.log("doLogin function called")
+    console.log("register data", $scope.registerData)
+    AuthFactory.register($scope.registerData.username, $scope.registerData.password)
+      .then(()=>{
+        $location.url('/app/about')
+      })
+  }
 
 })
 

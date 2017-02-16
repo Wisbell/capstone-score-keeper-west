@@ -73,31 +73,45 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
   $stateProvider
 
   // Auth state to fix substate bugs wit autentication
-  // .state('auth', {
-  //   url: '/auth',
-  //   templateUrl: 'templates/auth.html',
-  //   abstract: true
-  // })
+  .state('auth', {
+    url: '/auth',
+    templateUrl: 'templates/auth.html',
+    abstract: true
+  })
 
-  //  .state('auth.login', {
-  //     url: '/login',
-  //     views: {
-  //       'auth': {
-  //         templateUrl: 'templates/login2.html',
-  //         controller: 'LoginCtrl',
-  //         resolve: {
-  //           user (AuthFactory, $location, $state) {
-  //             return AuthFactory.getUser()
-  //               .then(function(user){
-  //                   $location.url('/app/about')
-  //               })
-  //               .catch(() => $location.url('/auth/login'))
-  //           }
-  //         }
-  //       }
-  //     }
-  //   })
+   .state('auth.login', {
+      url: '/login',
+      views: {
+        'auth': {
+          templateUrl: 'templates/login2.html',
+          controller: 'LoginCtrl',
+          resolve: {
+            user (AuthFactory, $location, $state) {
+              return AuthFactory.getUser()
+                .then(function(user){
+                    $location.url('/app/about')
+                    // $state.go('app.about')
+                })
+                .catch(() => $location.url('/auth/login'))
+                // .catch(() => $state.go('auth.login'))
+            }
+          }
+        }
+      }
+    })
 
+   .state('auth.register', {
+      url: '/register',
+      views: {
+        'auth': {
+          templateUrl: 'templates/register2.html',
+          controller: 'LoginCtrl'
+        }
+      }
+  })
+
+
+   // main app states
   .state('app', {
     url: '/app',
     abstract: true,
@@ -108,8 +122,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
               return AuthFactory.getUser()
                 .then(function(user){
                     $location.url('/app/about')
+                    // $state.go('app.about')
                 })
                 .catch(() => $location.url('/auth/login'))
+                // .catch(() => $state.go('auth.login'))
             }
     }
   })

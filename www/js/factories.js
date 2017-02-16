@@ -92,6 +92,11 @@ angular.module('starter.factories', [])
         return $q.resolve(firebase.auth().signInWithEmailAndPassword(email, pass))
       },
 
+      register (email, pass) {
+        // converts native ES6 promise to angular promise so no $scope.$apply needed
+        return $q.resolve(firebase.auth().createUserWithEmailAndPassword(email, pass))
+      },
+
       signOut () {
         return firebase.auth().signOut()
       },
@@ -104,15 +109,15 @@ angular.module('starter.factories', [])
         console.log("get user func fired")
         // Joel and Luke are my heroes.  Both Lukes, all lukes.
         return $q((resolve, reject) => {
-            console.log("please let me see this")
+            // console.log("please let me see this")
             const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-              console.log("does this log")
+              // console.log("does this log")
               unsubscribe();
               if (user) {
-                console.log("test1")
+                // console.log("test1")
                 resolve(user.uid);
               } else {
-                console.log("test2")
+                // console.log("test2")
                 reject("Not logged in");
               }
             }); //end const unsubscribe
