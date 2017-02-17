@@ -33,9 +33,27 @@
 
 
 <ion-view view-title="Score Keeper" hide-nav-bar="false">
-  <ion-content>
 
-    <form ng-submit="doLogin()">
+  <ion-header-bar class="bar-stable bar-balanced">
+    <h1 class="title">Menu</h1>
+  </ion-header-bar>
+
+  <ion-content>
+  <!-- <ion-header-bar class="bar-stable bar-balanced">
+    <h1 class="title">Menu</h1>
+  </ion-header-bar> -->
+
+  <!-- <div class="bar bar-header bar-balanced">
+    <h1 class="title">Score Keeper</h1>
+  </div> --> <!-- has-header -->
+
+  <div class="card">
+    <div class="item item-text-wrap">
+      Welcome to Score Keeper.  Please login or create an account to keep score or watch games.
+    </div>
+  </div>
+
+    <form ng-submit="doLogin(loginData)">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
@@ -54,7 +72,7 @@
     <div class="list">
       <label class="item">
         <span class="item item-input">Not a user? (∩╹□╹∩)</span>
-        <button class="button button-block button-calm" type="submit" ng-click="register()">Register</button>
+        <button class="button button-block button-calm" type="submit" ng-click="goToRegisterPage()">Register</button>
       </label>
     </div>
 

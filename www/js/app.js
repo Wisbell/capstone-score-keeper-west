@@ -1,3 +1,8 @@
+// ----------------------------------------
+// Abandon all hope, ye who enter here
+// ----------------------------------------
+
+
 // Ionic Starter App
 
 // Initialize Firebase
