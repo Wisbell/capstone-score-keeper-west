@@ -1,4 +1,10 @@
-<ion-view view-title="Watch a Game!">
+<ion-view view-title="Keep Score!">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button></ion-nav-back-button>
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
   <ion-content>
 
     <div class="card list">
@@ -15,10 +21,10 @@
       </a>
     </div>
 
-    <div class="card list">
+   <!--  <div class="card list">
       <div class="item item-divider">
         Your Past Games
-      </div>
+      </div> -->
 
       <!-- <a ng-repeat="game in liveGameList" href="#/app/myGames/{{game.gameTypeLinkName}}/{{game.gameId}}">
         <div class="item item-avatar">
@@ -27,12 +33,12 @@
           <p>{{game.gameType}}</p>
         </div>
       </a> -->
-    </div>
+    <!-- </div> -->
 
-    <ul>
+    <!-- <ul>
       <li>Live Games</li>
       <li>Past Games</li>
       <li>Your Scores</li>
-    </ul>
+    </ul> -->
   </ion-content>
 </ion-view>
