@@ -243,7 +243,8 @@ angular.module('starter.controllers', [])
       "gameHostUid": firebase.auth().currentUser.uid,
       "gameId": false,
       "gameOver": false,
-      "winningTeam": false
+      "winningTeam": false,
+      "pi": false
     }
 
     console.log("gameInfo object", gameInfo)
@@ -294,6 +295,41 @@ angular.module('starter.controllers', [])
 
 // PingPong Game Controller - Watching a single game
 .controller('PingPongGameCtrl', function($scope, $state, $ionicHistory, LiveGamesFactory, $stateParams, $ionicModal, $ionicBody, $timeout) {
+  // stream stuff
+  var connection = new RTCMultiConnection();
+
+  // this line is VERY_important
+  connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+  // all below lines are optional; however recommended.
+
+  connection.session = {
+      audio: true,
+      video: false
+  };
+
+  connection.sdpConstraints.mandatory = {
+      OfferToReceiveAudio: true,
+      OfferToReceiveVideo: false
+  };
+
+  connection.onstream = function(event) {
+      document.body.appendChild( event.mediaElement );
+  };
+
+  var predefinedRoomId = 'mega_test';
+
+  // document.getElementById('btn-open-room').onclick = function() {
+  //     this.disabled = true;
+  //     connection.open( predefinedRoomId );
+  // };
+
+  document.getElementById('btn-join-room').onclick = function() {
+      this.disabled = true;
+      connection.join( predefinedRoomId );
+  };
+
+  // end stream stuff
 
   // store stateParam to make get request
   let gameId = $stateParams.id
@@ -368,6 +404,40 @@ angular.module('starter.controllers', [])
 
 // PingPong Game Controller - Hosting a game
 .controller('HostPingPongGame', function($scope, $state, $ionicHistory, LiveGamesFactory, $stateParams, $ionicModal, $interval, $ionicBody, $location) {
+  // audio video stream stuff
+  var connection = new RTCMultiConnection();
+
+  // this line is VERY_important
+  connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+  // all below lines are optional; however recommended.
+
+  connection.session = {
+      audio: true,
+      video: false
+  };
+
+  connection.sdpConstraints.mandatory = {
+      OfferToReceiveAudio: true,
+      OfferToReceiveVideo: false
+  };
+
+  connection.onstream = function(event) {
+      document.body.appendChild( event.mediaElement );
+  };
+
+  var predefinedRoomId = 'mega_test';
+
+  document.getElementById('btn-open-room').onclick = function() {
+      this.disabled = true;
+      connection.open( predefinedRoomId );
+  };
+
+  // document.getElementById('btn-join-room').onclick = function() {
+  //     this.disabled = true;
+  //     connection.join( predefinedRoomId );
+  // };
+  // end streaming stuff
 
   // store stateParam to make get request
   let gameId = $stateParams.id
