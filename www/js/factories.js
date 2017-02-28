@@ -6,8 +6,8 @@ angular.module('starter.factories', [])
   return {
             getGameSettingsList: function(){
                       return gameSettingsRef.once('value')
-                        .then((snap) => snap.val())
-                        .then((gameSettingsObject) => {
+                        .then(function(snap) { snap.val()})
+                        .then(function(gameSettingsObject) {
                           // console.log("gameSettingsObject", gameSettingsObject)
                           return gameSettingsObject
                         })
@@ -15,12 +15,12 @@ angular.module('starter.factories', [])
 
             getGameNameList: function(){
                       return gameSettingsRef.once('value')
-                        .then((snap) => snap.val())
-                        .then((gameSettingsObject) => {
+                        .then(function(snap) { snap.val()})
+                        .then(function(gameSettingsObject) {
 
-                          let nameList = []
+                          var nameList = []
 
-                          for(let obj in gameSettingsObject) {
+                          for(var obj in gameSettingsObject) {
                             nameList.push(gameSettingsObject[obj].gameTypeName)
                           }
 
@@ -46,22 +46,23 @@ angular.module('starter.factories', [])
   return {
             getCurrentGameList: function(){
                       return currentGamesRef.once('value')
-                        .then((snap) => snap.val())
-                        .then((currentGamesList) => {
+                        .then(function(snap) { snap.val()})
+                        .then(function(currentGamesList) {
                           console.log("currentGamesList", currentGamesList)
                           return currentGamesList
                         })
                     },
 
             getParticularGame: function(gameId){
-                      return rootDatabase.ref(`currentGames/${gameId}`).once('value')
-                        .then((snap)=> {
+                      // return rootDatabase.ref(`currentGames/${gameId}`).once('value')
+                      return rootDatabase.ref('currentGames/' + gameId).once('value')
+                        .then(function(snap) {
                           return snap.val()
                         })
                     },
             getAllHostGames: function(hostUid){
                       return currentGamesRef.orderByChild('gameHostUid').equalTo(hostUid).once('value')
-                        .then((snap)=> {
+                        .then(function(snap) {
                           return snap.val()
                         })
                     }
@@ -73,10 +74,10 @@ angular.module('starter.factories', [])
 
   return {
             getPastGameList: function(){
-                      return rootDatabase.ref(`pastGames`).once('value')
-                        .then((snap) => snap.val())
-                        .then((pastGamesList) => {
-                          console.log("pastGamesList", pastGamesList)
+                      return rootDatabase.ref("pastGames").once('value')
+                        .then(function(snap) { snap.val()})
+                        .then(function(pastGamesList) {
+                          console.log('pastGamesList', pastGamesList)
                           return pastGamesList
                         })
                     }
@@ -85,27 +86,27 @@ angular.module('starter.factories', [])
 
 
 // Auth Factory
-.factory('AuthFactory', ($q) => {
+.factory('AuthFactory', function($q) {
     return {
-      login (email, pass) {
+      login: function (email, pass) {
         // converts native ES6 promise to angular promise so no $scope.$apply needed
         return $q.resolve(firebase.auth().signInWithEmailAndPassword(email, pass))
       },
 
-      signOut () {
+      signOut: function () {
         return firebase.auth().signOut()
       },
 
-      getUserId () {
+      getUserId: function () {
         return firebase.auth().currentUser.uid
       },
 
-      getUser () {
+      getUser: function () {
         console.log("get user func fired")
         // Joel and Luke are my heroes.  Both Lukes, all lukes.
-        return $q((resolve, reject) => {
+        return $q(function(resolve, reject) {
             console.log("please let me see this")
-            const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+            const unsubscribe = firebase.auth().onAuthStateChanged(function(user) {
               console.log("does this log")
               unsubscribe();
               if (user) {

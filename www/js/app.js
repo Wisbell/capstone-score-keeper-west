@@ -34,9 +34,9 @@ const currentGamesRef = firebase.database().ref('currentGames')
 // });
 
 const checkForAuth = {
-      checkForAuth ($state, $ionicHistory, $location) {
+      checkForAuth: function ($state, $ionicHistory, $location) {
         // http://stackoverflow.com/questions/37370224/firebase-stop-listening-onauthstatechanged
-        const authReady = firebase.auth().onAuthStateChanged(user => {
+        const authReady = firebase.auth().onAuthStateChanged(function(user){
           authReady()
           if (!user) {
             $ionicHistory.nextViewOptions({
@@ -91,13 +91,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
           templateUrl: 'templates/login2.html',
           controller: 'LoginCtrl',
           resolve: {
-            user (AuthFactory, $location, $state) {
+            user: function (AuthFactory, $location, $state) {
               return AuthFactory.getUser()
                 .then(function(user){
                     $location.url('/app/about')
                     // $state.go('app.about')
                 })
-                .catch(() => $location.url('/auth/login'))
+                .catch(function() {$location.url('/auth/login')})
                 // .catch(() => $state.go('auth.login'))
             }
           }
@@ -123,13 +123,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     templateUrl: 'templates/menu.html',
     controller: 'ScoreKeeperAppCtrl',
     resolve: {
-      user (AuthFactory, $location, $state) {
+      user: function (AuthFactory, $location, $state) {
               return AuthFactory.getUser()
                 .then(function(user){
                     $location.url('/app/about')
                     // $state.go('app.about')
                 })
-                .catch(() => $location.url('/auth/login'))
+                .catch(function(){ $location.url('/auth/login')})
                 // .catch(() => $state.go('auth.login'))
             }
     }
