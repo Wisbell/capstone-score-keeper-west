@@ -1,0 +1,127 @@
+<ion-view view-title="Create a Game!">
+  <ion-content>
+
+    <form name="createForm" ng-submit="submitGameButton()">
+      <div class="list">
+
+        <!-- Type of Game? -->
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Basic Settings</span><br>
+          <label class = "item item-input item-select item-light">
+            <div class = "input-label">
+               Type
+            </div>
+
+            <!-- List games in select input -->
+            <select ng-options="name for name in gameNameList" ng-model="selectedGame"></select>
+
+         </label>
+
+         <!-- Name the game -->
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Give your game a title</span>
+          <input ng-model="gameInfo.gameName" type="text" placeholder="Name your game">
+        </label>
+        </label>
+
+        <!-- Game Settings -->
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Game Settings</span>
+          <!-- Number of Players -->
+          <label class = "item item-input item-select item-light">
+            <div class = "input-label">
+               How many Players?
+            </div>
+
+            <select>
+               <option selected>2</option>
+               <option>4</option>
+            </select>
+
+         </label>
+
+          <!-- Score to win -->
+          <label class = "item item-input item-select item-light">
+            <div class = "input-label">
+               Score to Win
+            </div>
+
+            <select>
+               <option>11</option>
+               <option selected>21</option>
+            </select>
+
+         </label>
+
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Team Settings</span>
+
+          <!-- Team Row Div -->
+          <!-- <div class="row"> -->
+            <!-- Team 1 Div -->
+            <div class="col">
+              <p>Team 1</p>
+              <!-- Team 1 Info -->
+              <div class="list">
+                <!-- Team 1 Name Header -->
+                <label class="item item-input item-stacked-label">
+                  <span class="input-label">Name</span>
+                  <input type="text" placeholder="Team name here">
+                </label>
+
+                <label class = "item item-input item-select item-light">
+                  <div class = "input-label">
+                     Player
+                  </div>
+
+                  <select>
+                     <option>Guest</option>
+                     <option selected>Player List Here</option>
+                     <option>Option 3</option>
+                  </select>
+
+                </label>
+              </div>
+            </div> <!-- Close Team 1 Div -->
+
+            <!-- Team 2 Div -->
+            <div class="col">
+              <p>Team 2</p>
+              <!-- Team 2 Info -->
+              <div class="list">
+                <!-- Team 2 Name Header -->
+                <label class="item item-input item-stacked-label">
+                  <span class="input-label">Name</span>
+                  <input type="text" placeholder="Team name here">
+                </label>
+
+                <label class = "item item-input item-select item-light">
+
+                  <div class = "input-label">
+                     Player
+                  </div>
+
+                  <select>
+                     <option>Guest</option>
+                     <option selected>Player List here</option>
+                     <option>Option 3</option>
+                  </select>
+
+                </label>
+              </div>
+            </div>  <!-- Close Team 2 Div -->
+
+          <!-- </div>  --><!-- Close Row Div -->
+
+        </label>
+
+      </div> <!-- Close List Wrapper Div -->
+
+    <input class="button button-full button-positive createGameButton" type="submit" value="Choose Settings">
+
+  </form>
+
+  </ion-content>
+</ion-view>

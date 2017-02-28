@@ -1,0 +1,114 @@
+<ion-view view-title="Ping Pong Settings">
+  <ion-content>
+
+    <form ng-submit="createGameButton()">
+
+      <div class="list">
+
+        <!-- Name Settings -->
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Game Name</span>
+          <input type="text" placeholder="This shows up on the game list" ng-model="settings.gameName">
+        </label>
+
+        <!-- Game Settings -->
+        <div class="item item-input-inset">
+          <ion-list>
+            <div class="item item-divider">Choose Players</div>
+            <ion-radio ng-model="settings.playerChoice" ng-value="'2'" name="playerNumber">2 Player</ion-radio>
+            <ion-radio ng-model="settings.playerChoice" ng-value="'4'" name="playerNumber">4 Player</ion-radio>
+          </ion-list>
+
+          <ion-list>
+            <div class="item item-divider">Choose Game</div>
+            <ion-radio ng-model="settings.gameChoice" ng-value="'Short'" name="gameType" ng-change="updateSettings()">Short Game</ion-radio>
+            <ion-radio ng-model="settings.gameChoice" ng-value="'Long'" name="gameType" ng-change="updateSettings()">Long Game</ion-radio>
+          </ion-list>
+        </div>
+
+        <!-- Selected Settings -->
+        <div class="card">
+          <div class="item item-divider">
+            Selected Settings
+          </div>
+          <div class="item item-text-wrap">
+
+            <div class="list">
+
+              <p class="item item-icon-left">
+                <i class="icon ion-person-add"></i>
+                Players
+                <span class="badge badge-assertive" ng-model="playerChoice">{{settings.playerChoice}}</span>
+              </p>
+
+              <p class="item item-icon-left">
+                <i class="icon ion-person-stalker"></i>
+                Type
+                <span class="badge badge-assertive" ng-model="gameChoice">{{settings.gameChoice}}</span>
+              </p>
+
+              <p class="item item-icon-left">
+                <i class="icon ion-person-stalker"></i>
+                Winning Score
+                <span class="badge badge-assertive" ng-bind="winningScore">{{winningScore}}</span>
+              </p>
+
+              <p class="item item-icon-left">
+                <i class="icon ion-person-stalker"></i>
+                Switch Servers Every
+                <span class="badge badge-assertive" ng-bind="switchServer">{{switchServer}}</span>
+              </p>
+
+            </div>
+
+          </div>
+          <!-- <div class="item item-divider">
+            I'm a Footer in a Card!
+          </div> -->
+
+        </div>
+
+        <!-- Team Settings -->
+        <div class="card">
+          <div class="item item-divider">
+            Team Settings
+          </div>
+          <div class="item item-text-wrap">
+
+            <div class="list">
+
+              <p class="item item-icon-left">
+                <i class="icon ion-person-stalker"></i>
+                Team 1
+                <div class="list">
+                  <label class="item item-input">
+                    <span class="input-label">Team Name</span>
+                    <input type="text" placeholder="Team Name Here" ng-model="settings.team1Name">
+                  </label>
+                </div>
+              </p>
+
+              <p class="item item-icon-left">
+                <i class="icon ion-person-stalker"></i>
+                Team 2
+                <div class="list">
+                  <label class="item item-input">
+                    <span class="input-label">Team Name</span>
+                    <input type="text" placeholder="Team Name Here" ng-model="settings.team2Name">
+                  </label>
+                </div>
+              </p>
+
+            </div>
+
+      </div>
+
+      </div>
+
+      </div>
+
+      <input class="button button-full button-positive createGameButton" type="submit" value="Start Ping Pong Game!">
+
+    </form>
+  </ion-content>
+</ion-view>

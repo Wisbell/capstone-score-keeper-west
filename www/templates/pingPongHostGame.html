@@ -1,0 +1,81 @@
+<ion-view>
+  <ion-nav-title>{{currentGame.team1Name}} vs {{currentGame.team2Name}}</ion-nav-title>
+  <ion-content>
+
+    <div class="card">
+
+      <div class="item item-divider">Score</div>
+
+      <div class="row">
+
+        <div class="col">
+          <div class="item item-divider">{{currentGame.team1Name}}</div>
+
+          <div class="item item-text-wrap">
+            {{currentGame.team1Points}}
+          </div>
+
+          <div class="item item-divider">Change Team 1 Score</div>
+
+          <div class="item item-text-wrap">
+            <!-- Team 1 increment score -->
+            <button class="button button-stable ion-plus" ng-click="incrementScoreTeamOne()"></button>
+            <!-- Team 1 decrement score -->
+            <button class="button button-stable ion-minus" ng-click="decrementScoreTeamOne()"></button>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="item item-divider">{{currentGame.team2Name}}</div>
+
+          <div class="item item-text-wrap">
+            {{currentGame.team2Points}}
+          </div>
+
+          <div class="item item-divider">Change Team 2 Score</div>
+          <div class="item item-text-wrap">
+            <!-- Team 2 increment score -->
+            <button class="button button-stable ion-plus" ng-click="incrementScoreTeamTwo()"></button>
+            <!-- Team 2 increment score  -->
+            <button class="button button-stable ion-minus" ng-click="decrementScoreTeamTwo()"></button>
+          </div>
+        </div>
+
+      </div> <!-- close score row -->
+
+    </div>
+
+    <div class="card">
+
+      <div class="item item-divider">Current Server</div>
+
+      <div class="item item-text-wrap">someone go already</div>
+
+    </div>
+
+    <!-- Game Settings/Info -->
+    <div class="card">
+
+      <div class="item item-divider">Game Settings</div>
+
+      <ul class="list">
+        <li class="item">Game Name: {{currentGame.gameName}}</li>
+        <li class="item">Players: {{currentGame.numPlayers}}</li>
+        <li class="item">Winning Score: {{currentGame.winningScore}}</li>
+      </ul>
+
+    </div>
+
+    <div class="card">
+
+      <div class="item item-divider">Listen stuff</div>
+
+      <button class="button button-positive">Listen Live</button>
+      <button class="button button-assertive">Stop Stream</button>
+
+      wot this doesnt work
+
+    </div>
+
+  </ion-content>
+</ion-view>

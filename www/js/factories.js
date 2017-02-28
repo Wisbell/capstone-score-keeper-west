@@ -1,0 +1,150 @@
+angular.module('starter.factories', [])
+
+// Create Game Factory
+.factory('CreateGameFactory', function($http){
+
+  return {
+            getGameSettingsList: function(){
+                      return gameSettingsRef.once('value')
+                        .then((snap) => snap.val())
+                        .then((gameSettingsObject) => {
+                          // console.log("gameSettingsObject", gameSettingsObject)
+                          return gameSettingsObject
+                        })
+                    },
+
+            getGameNameList: function(){
+                      return gameSettingsRef.once('value')
+                        .then((snap) => snap.val())
+                        .then((gameSettingsObject) => {
+
+                          let nameList = []
+
+                          for(let obj in gameSettingsObject) {
+                            nameList.push(gameSettingsObject[obj].gameTypeName)
+                          }
+
+                          return nameList
+                        })
+                    },
+            createNewGame: function(createGame){
+                      console.log("createNewGame function called from factory")
+                      console.log("create game object", createGame)
+                      return currentGamesRef.push(createGame)
+                        // .then((snap)=>{
+                        //   console.log("key?", snap.key)
+                        //   return snap.key
+                        // })
+                    }
+          } // Close factory return statement
+})
+
+
+// Live Games Factory
+.factory('LiveGamesFactory', function($http){
+
+  return {
+            getCurrentGameList: function(){
+                      return currentGamesRef.once('value')
+                        .then((snap) => snap.val())
+                        .then((currentGamesList) => {
+                          console.log("currentGamesList", currentGamesList)
+                          return currentGamesList
+                        })
+                    },
+
+            getParticularGame: function(gameId){
+                      return rootDatabase.ref(`currentGames/${gameId}`).once('value')
+                        .then((snap)=> {
+                          return snap.val()
+                        })
+                    },
+            getAllHostGames: function(hostUid){
+                      return currentGamesRef.orderByChild('gameHostUid').equalTo(hostUid).once('value')
+                        .then((snap)=> {
+                          return snap.val()
+                        })
+                    }
+          } // Close factory return statement
+})
+
+// Past Games Factory
+.factory('PastGamesFactory', function($http){
+
+  return {
+            getPastGameList: function(){
+                      return rootDatabase.ref(`pastGames`).once('value')
+                        .then((snap) => snap.val())
+                        .then((pastGamesList) => {
+                          console.log("pastGamesList", pastGamesList)
+                          return pastGamesList
+                        })
+                    }
+          } // Close factory return statement
+})
+
+
+// Auth Factory
+.factory('AuthFactory', ($q) => {
+    return {
+      login (email, pass) {
+        // converts native ES6 promise to angular promise so no $scope.$apply needed
+        return $q.resolve(firebase.auth().signInWithEmailAndPassword(email, pass))
+      },
+
+      signOut () {
+        return firebase.auth().signOut()
+      },
+
+      getUserId () {
+        return firebase.auth().currentUser.uid
+      },
+
+      getUser () {
+        console.log("get user func fired")
+        // Joel and Luke are my heroes.  Both Lukes, all lukes.
+        return $q((resolve, reject) => {
+            console.log("please let me see this")
+            const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+              console.log("does this log")
+              unsubscribe();
+              if (user) {
+                console.log("test1")
+                resolve(user.uid);
+              } else {
+                console.log("test2")
+                reject("Not logged in");
+              }
+            }); //end const unsubscribe
+          }); //end return getUser
+        } //end getUser
+      } // close factory return satement
+  }) // end Auth Factory
+
+
+// const checkForAuth = {
+//       checkForAuth ($location) {
+//         // http://stackoverflow.com/questions/37370224/firebase-stop-listening-onauthstatechanged
+//         const authReady = firebase.auth().onAuthStateChanged(user => {
+//           authReady()
+//           if (!user) {
+//             $location.url('/')
+//           }
+//         })
+//       }
+//     }
+
+
+
+// app.factory('DoctorFactory', function($http){
+
+//   return {
+//             getDoctorList: function(){
+//               return $http.get('https://west-doctors-patients.firebaseio.com/doctors.json')
+//                 .then(function(val){
+//                   console.log("val", val)
+//                   return val.data
+//               })
+//             }
+//           }
+// })
