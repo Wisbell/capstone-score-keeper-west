@@ -1,6 +1,7 @@
 # Score-keeper
 Westley Isbell's capstone project for NSS Cohort 17
 
+![Alt text](/score_keeper.png?raw=true "Optional Title")
 
 # Trello - https://trello.com/b/IQC4v54m/capstone
 
