@@ -255,9 +255,10 @@ angular.module('starter.controllers', [])
         gameKey = snap.key
 
         // update game object with parent key as a gameId
-        firebase.database().ref('currentGames/' + gameKey.update({
+        firebase.database().ref('currentGames/' + gameKey).update({
           "gameId": gameKey
         })
+
       })
       .then(function(){
         $location.url('/app/myGames/pingPong/' + gameKey)
@@ -404,7 +405,7 @@ angular.module('starter.controllers', [])
 
     $scope.teamOneScore
 
-    rootDatabase.ref('currentGames/' + gameId '/team1Points').once('value')
+    rootDatabase.ref('currentGames/' + gameId + '/team1Points').once('value')
       .then(function(snap) {
         // console.log('test')
         console.log('snap', snap.val())
@@ -433,7 +434,7 @@ angular.module('starter.controllers', [])
           $scope.teamOneScore = $scope.teamOneScore - 1
           console.log($scope.teamOneScore)
 
-          rootDatabase.ref('currentGames/' + gameId '/').update({"team1Points": $scope.teamOneScore})
+          rootDatabase.ref('currentGames/' + gameId + '/').update({"team1Points": $scope.teamOneScore})
           // return snap.val()
         } else {
           console.log("score cannot be less than 0")
@@ -447,7 +448,7 @@ angular.module('starter.controllers', [])
     $scope.teamTwoScore
     console.log('teamTwoScore initally', $scope.teamTwoScore)
 
-    rootDatabase.ref('currentGames/' + gameId +  '/team2Points').once('value')
+    rootDatabase.ref('currentGames/' + gameId + '/team2Points').once('value')
       .then(function(snap) {
         // console.log('test')
         console.log('snap', snap.val())
