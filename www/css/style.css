@@ -1,14 +1,8 @@
-/* Empty. Add your own CSS if you like */
-
-/* Styles here */
-/*.item-select {
-  width: 100%;  Or whatever you'd like the width to be
-}
-
-.item-select select {
-  left: 0;
-}*/
 
 .createGameButton {
   width: 100%;
+}
+
+.nav-margin {
+  margin-top: 59px;
 }
