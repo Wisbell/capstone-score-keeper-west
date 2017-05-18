@@ -1,9 +1,3 @@
-// ----------------------------------------
-// Abandon all hope, ye who enter here
-// ----------------------------------------
-
-
-// Ionic Starter App
 
 // Initialize Firebase
 var config = {
@@ -13,25 +7,13 @@ var config = {
   storageBucket: "west-score-keeper.appspot.com",
   messagingSenderId: "436613032037"
 };
+
 firebase.initializeApp(config);
 
 // Database References
 const rootDatabase = firebase.database()
 const gameSettingsRef = firebase.database().ref('gameSettings')
 const currentGamesRef = firebase.database().ref('currentGames')
-
-// firebase auth id
-// var uid = null;
-
-// firebase.auth().onAuthStateChanged(function(user) {
-//   console.log("auth state changed")
-//   if (user) {
-//     // User is signed in.
-//     uid = firebase.auth().currentUser.uid;
-//   } else {
-//     uid = null;
-//   }
-// });
 
 const checkForAuth = {
       checkForAuth: function ($state, $ionicHistory, $location) {
@@ -43,7 +25,6 @@ const checkForAuth = {
               disableBack: true
             });
 
-            // $location.url('/app/myGames/')
             $state.go('app.myGames')
           }
         })
@@ -74,47 +55,43 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
-  // $ionicConfigProvider.views.maxCache(0);
   $stateProvider
 
-  // Auth state to fix substate bugs wit autentication
+  // Auth state to fix substate bugs with authentication
   .state('auth', {
     url: '/auth',
     templateUrl: 'templates/auth.html',
     abstract: true
   })
 
-   .state('auth.login', {
-      url: '/login',
-      views: {
-        'auth': {
-          templateUrl: 'templates/login2.html',
-          controller: 'LoginCtrl',
-          resolve: {
-            user: function (AuthFactory, $location, $state) {
-              return AuthFactory.getUser()
-                .then(function(user){
-                    $location.url('/app/about')
-                    // $state.go('app.about')
-                })
-                .catch(function() { $location.url('/auth/login') })
-                // .catch(() => $state.go('auth.login'))
+  .state('auth.login', {
+    url: '/login',
+    views: {
+      'auth': {
+        templateUrl: 'templates/login2.html',
+        controller: 'LoginCtrl',
+        resolve: {
+          user: function (AuthFactory, $location, $state) {
+            return AuthFactory.getUser()
+              .then(function(user){
+                  $location.url('/app/about')
+              })
+              .catch(function() { $location.url('/auth/login') })
             }
           }
         }
       }
     })
 
-   .state('auth.register', {
-      url: '/register',
-      views: {
-        'auth': {
-          templateUrl: 'templates/register2.html',
-          controller: 'LoginCtrl'
-        }
+  .state('auth.register', {
+    url: '/register',
+    views: {
+      'auth': {
+        templateUrl: 'templates/register2.html',
+        controller: 'LoginCtrl'
       }
+    }
   })
-
 
    // main app states
   .state('app', {
@@ -127,17 +104,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
               return AuthFactory.getUser()
                 .then(function(user){
                     $location.url('/app/about')
-                    // $state.go('app.about')
                 })
                 .catch( function () { $location.url('/auth/login') })
-                // .catch(() => $state.go('auth.login'))
             }
     }
   })
 
   // --------- My custom states -------------
 
-  // My main route - about page
+  // About page
   .state('app.about', {
     url: '/about',
     views: {
@@ -148,7 +123,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
     }
   })
 
-  // list logged in users hosted games
+  // List logged in users hosted games
   .state('app.myGames', {
     url: '/myGames',
     views: {
@@ -156,26 +131,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
         templateUrl: 'templates/myGames.html',
         controller: 'UserGameListCtrl',
         resolve: checkForAuth
-        // resolve: {
-        //   user (AuthFactory, $state, $scope, $location) {
-        //     // console.log("does this log")
-        //     return AuthFactory.getUser()
-        //       .then((user)=>{ console.log(user) })
-        //       // .catch(()=>{
-        //       // // does this work
-        //       // console.log("does this work")
-
-        //       // $location.url('/app/about')
-
-        //       // $state.go('app.about')
-
-        //       // $scope.login()
-        //     // })
-        //   }
-        // }
       }
     }
   })
+
   // logged in users particular game
   .state('app.myGamesPingPong', {
     url: '/myGames/pingPong/:id',
@@ -186,6 +145,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
       }
     }
   })
+
   // show a list of all games able to be created
   .state('app.createGame', {
     url: '/createGame',
@@ -242,14 +202,3 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/about');
 });
-
-
-// Notes For Westley - I suffer from KRS, aka "Kant Remember Shit"
-
-// .set()   overwrite
-
-// .update()   just like patch
-
-// .remove()  delete stuffs
-
-//  .push()   like post dummy
