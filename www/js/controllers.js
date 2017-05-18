@@ -110,23 +110,23 @@ angular.module('starter.controllers', [])
   $scope.loginData = {};
   $scope.registerData = {};
 
-  $scope.doLogin = (loginData)=>{
+  $scope.doLogin = function(loginData){
     console.log("doLogin function called")
     AuthFactory.login($scope.loginData.username, $scope.loginData.password)
-      .then(()=>{
+      .then(function(){
         $location.url('/app/about')
       })
   }
 
-  $scope.goToRegisterPage = () => {
+  $scope.goToRegisterPage = function ()  {
     $location.url('/auth/register')
   }
 
-  $scope.doRegister = (registerData)=>{
+  $scope.doRegister = function(registerData){
     console.log("doLogin function called")
     console.log("register data", $scope.registerData)
     AuthFactory.register($scope.registerData.username, $scope.registerData.password)
-      .then(()=>{
+      .then(function(){
         $location.url('/app/about')
       })
   }
@@ -178,7 +178,7 @@ angular.module('starter.controllers', [])
       disableBack: true
     });
 
-    $state.go(`app.createGame`)
+    $state.go('app.createGame')
   }
 
   $scope.goToLiveGamesPage = function () {
@@ -188,7 +188,7 @@ angular.module('starter.controllers', [])
       disableBack: true
     });
 
-    $state.go(`app.liveGames`)
+    $state.go('app.liveGames')
   }
 })
 
@@ -206,7 +206,7 @@ angular.module('starter.controllers', [])
   $scope.switchServer = "5"
 
   // ng-change function for when gameChoice changes
-  $scope.updateSettings = () => {
+  $scope.updateSettings = function () {
     console.log("gameChoice changed")
 
     if($scope.settings.gameChoice === "Long") {
@@ -222,13 +222,13 @@ angular.module('starter.controllers', [])
   }
 
   // submit ping pong game function
-  $scope.createGameButton = () => {
+  $scope.createGameButton = function () {
     console.log("createGameButton clicked")
 
-    let gameKey
+    var gameKey
 
     // gameId is null on default because the id isn't created until it is posted to firebase
-    let gameInfo = {
+    var gameInfo = {
       "gameType": "Ping Pong",
       "gamePicUrl": "img/ping-pong.jpeg",
       "gameName": $scope.settings.gameName,
@@ -250,17 +250,17 @@ angular.module('starter.controllers', [])
 
     // Don't use JSON.stringify
     CreateGameFactory.createNewGame(gameInfo)
-      .then((snap)=>{
+      .then(function(snap){
         // get key of newly created game object
         gameKey = snap.key
 
         // update game object with parent key as a gameId
-        firebase.database().ref(`currentGames/${gameKey}`).update({
+        firebase.database().ref('currentGames/' + gameKey.update({
           "gameId": gameKey
         })
       })
-      .then(()=>{
-        $location.url(`/app/myGames/pingPong/${gameKey}`)
+      .then(function(){
+        $location.url('/app/myGames/pingPong/' + gameKey)
         $scope.$apply()
       })
   }
@@ -271,20 +271,20 @@ angular.module('starter.controllers', [])
 
   console.log("lives games ctrl loaded")
 
-  currentGamesRef.on('child_added', ()=>{
+  currentGamesRef.on('child_added', function(){
     console.log("child_added")
     LiveGamesFactory.getCurrentGameList()
-    .then((gameList) => {
+    .then(function(gameList) {
       $scope.currentGames = gameList
       // $scope.selectedGame = $scope.gameNameList[0]
       $scope.$apply()
     })
   })
 
-  currentGamesRef.on('child_removed', ()=>{
+  currentGamesRef.on('child_removed', function(){
     console.log("child_removed")
     LiveGamesFactory.getCurrentGameList()
-    .then((gameList) => {
+    .then(function(gameList) {
       $scope.currentGames = gameList
       // $scope.selectedGame = $scope.gameNameList[0]
       $scope.$apply()
@@ -296,7 +296,7 @@ angular.module('starter.controllers', [])
 .controller('PingPongGameCtrl', function($scope, $state, $ionicHistory, LiveGamesFactory, $stateParams, $ionicModal, $ionicBody, $timeout) {
 
   // store stateParam to make get request
-  let gameId = $stateParams.id
+  var gameId = $stateParams.id
 
   // $scope.test = "test"
   // scope variable to store game object
@@ -304,20 +304,20 @@ angular.module('starter.controllers', [])
 
   // get the particular games information from firebase and store it
   LiveGamesFactory.getParticularGame(gameId)
-    .then((game)=>{
+    .then(function(game){
       $scope.currentGame = game;
       console.log("scope game", $scope.currentGame)
     })
 
   // change game scores or current server when changed
-  rootDatabase.ref(`currentGames/${gameId}`).on('child_changed', ()=>{
+  rootDatabase.ref('currentGames/' + gameId).on('child_changed', function(){
     LiveGamesFactory.getParticularGame(gameId)
-    .then((game)=>{
+    .then(function(game){
       $scope.currentGame = game;
       console.log("changed game", $scope.currentGame)
       $scope.$apply()
     })
-    .then(()=>{$scope.checkWinnerWatchGame()})
+    .then(function(){$scope.checkWinnerWatchGame()})
   })
 
   // winner modal
@@ -329,7 +329,7 @@ angular.module('starter.controllers', [])
       $scope.winnerModal.show()
     } else {
       // This time out is necessary to prevent a bug with the modal
-      $timeout(()=>{
+      $timeout(function(){
         if(!$scope.currentGame.gameOver){
           // console.log("game over false")
           $scope.closeWinnerWatcherModal()
@@ -370,7 +370,7 @@ angular.module('starter.controllers', [])
 .controller('HostPingPongGame', function($scope, $state, $ionicHistory, LiveGamesFactory, $stateParams, $ionicModal, $interval, $ionicBody, $location) {
 
   // store stateParam to make get request
-  let gameId = $stateParams.id
+  var gameId = $stateParams.id
   // $scope.winningScore
 
   // $scope.test = "test"
@@ -379,15 +379,15 @@ angular.module('starter.controllers', [])
 
   // get the particular games information from firebase and store it
   LiveGamesFactory.getParticularGame(gameId)
-    .then((game)=>{
+    .then(function(game){
       $scope.currentGame = game;
       console.log("scope game", $scope.currentGame)
     })
 
   // change game scores or current server when changed
-  rootDatabase.ref(`currentGames/${gameId}`).on('child_changed', ()=>{
+  rootDatabase.ref('currentGames/' + gameId).on('child_changed', function(){
     LiveGamesFactory.getParticularGame(gameId)
-    .then((game)=>{
+    .then(function(game){
       $scope.currentGame = game;
       console.log("changed game", $scope.currentGame)
       // console.log("team 1 points", $scope.currentGame.team1Points)
@@ -396,7 +396,7 @@ angular.module('starter.controllers', [])
       $scope.$apply()
     })
     // check for a winner when the game is changed
-    .then(()=>{$scope.checkWinner()})
+    .then(function(){$scope.checkWinner()})
   })
 
   $scope.incrementScoreTeamOne = function(){
@@ -404,15 +404,15 @@ angular.module('starter.controllers', [])
 
     $scope.teamOneScore
 
-    rootDatabase.ref(`currentGames/${gameId}/team1Points`).once('value')
-      .then((snap)=> {
+    rootDatabase.ref('currentGames/' + gameId '/team1Points').once('value')
+      .then(function(snap) {
         // console.log('test')
         console.log('snap', snap.val())
         $scope.teamOneScore = snap.val()
         $scope.teamOneScore = $scope.teamOneScore + 1
         console.log("team one score increment", $scope.teamOneScore)
 
-        rootDatabase.ref(`currentGames/${gameId}/`).update({"team1Points": $scope.teamOneScore})
+        rootDatabase.ref('currentGames/' + gameId + '/').update({"team1Points": $scope.teamOneScore})
         // return snap.val()
       })
       // .then(()=>{$scope.checkWinner()})
@@ -423,8 +423,8 @@ angular.module('starter.controllers', [])
 
     $scope.teamOneScore
 
-    rootDatabase.ref(`currentGames/${gameId}/team1Points`).once('value')
-      .then((snap)=> {
+    rootDatabase.ref('currentGames/' + gameId + '/team1Points').once('value')
+      .then(function(snap) {
         // console.log('test')
         console.log('snap', snap.val())
 
@@ -433,7 +433,7 @@ angular.module('starter.controllers', [])
           $scope.teamOneScore = $scope.teamOneScore - 1
           console.log($scope.teamOneScore)
 
-          rootDatabase.ref(`currentGames/${gameId}/`).update({"team1Points": $scope.teamOneScore})
+          rootDatabase.ref('currentGames/' + gameId '/').update({"team1Points": $scope.teamOneScore})
           // return snap.val()
         } else {
           console.log("score cannot be less than 0")
@@ -447,15 +447,15 @@ angular.module('starter.controllers', [])
     $scope.teamTwoScore
     console.log('teamTwoScore initally', $scope.teamTwoScore)
 
-    rootDatabase.ref(`currentGames/${gameId}/team2Points`).once('value')
-      .then((snap)=> {
+    rootDatabase.ref('currentGames/' + gameId +  '/team2Points').once('value')
+      .then(function(snap) {
         // console.log('test')
         console.log('snap', snap.val())
         $scope.teamTwoScore = snap.val()
         $scope.teamTwoScore = $scope.teamTwoScore + 1
         console.log("updated team two score", $scope.teamTwoScore)
 
-        rootDatabase.ref(`currentGames/${gameId}/`).update({"team2Points": $scope.teamTwoScore})
+        rootDatabase.ref('currentGames/' + gameId + '/').update({"team2Points": $scope.teamTwoScore})
         // return snap.val()
       })
       // .then(()=>{$scope.checkWinner()})
@@ -467,8 +467,8 @@ angular.module('starter.controllers', [])
     $scope.teamTwoScore
     console.log('teamTwoScore initally', $scope.teamTwoScore)
 
-    rootDatabase.ref(`currentGames/${gameId}/team2Points`).once('value')
-      .then((snap)=> {
+    rootDatabase.ref('currentGames/' + gameId + '/team2Points').once('value')
+      .then(function(snap) {
         // console.log('test')
         console.log('snap', snap.val())
 
@@ -477,7 +477,7 @@ angular.module('starter.controllers', [])
           $scope.teamTwoScore = $scope.teamTwoScore - 1
           console.log("updated team two score", $scope.teamTwoScore)
 
-          rootDatabase.ref(`currentGames/${gameId}/`).update({"team2Points": $scope.teamTwoScore})
+          rootDatabase.ref('currentGames/' + gameId + '/').update({"team2Points": $scope.teamTwoScore})
           // return snap.val()
         }
       })
@@ -486,39 +486,39 @@ angular.module('starter.controllers', [])
   $scope.checkWinner = function(){
     console.log("checkWinner function called")
     // grab winning score
-    let winningScore = $scope.currentGame.winningScore
+    var winningScore = $scope.currentGame.winningScore
     // get score of both teams
-    let teamOneScore = $scope.currentGame.team1Points// + 1
+    var teamOneScore = $scope.currentGame.team1Points// + 1
     console.log("team one score", teamOneScore)
-    let teamTwoScore = $scope.currentGame.team2Points// + 1
+    var teamTwoScore = $scope.currentGame.team2Points// + 1
     console.log("team two score", teamTwoScore)
     // check team 1 score to winning score
     if(teamOneScore == winningScore){
       console.log("team one won")
       // update winningTeam variable on firebase
-      rootDatabase.ref(`currentGames/${gameId}/`).update({"winningTeam": $scope.currentGame.team1Name})
+      rootDatabase.ref('currentGames/' + gameId + '/').update({"winningTeam": $scope.currentGame.team1Name})
       // ask host to end game
         // show modal
       $scope.winnerModal.show()
 
       // if host ends game change game over value on firebase
-      rootDatabase.ref(`currentGames/${gameId}/`).update({"gameOver": true})
+      rootDatabase.ref('currentGames/' + gameId + '/').update({"gameOver": true})
     }
     // check team 2 score to winning score
     else if(teamTwoScore == winningScore){
       console.log("team two won")
 
-      rootDatabase.ref(`currentGames/${gameId}/`).update({"winningTeam": $scope.currentGame.team2Name})
+      rootDatabase.ref('currentGames/' + gameId + '/').update({"winningTeam": $scope.currentGame.team2Name})
 
-      rootDatabase.ref(`currentGames/${gameId}/`).update({"gameOver": true})
+      rootDatabase.ref('currentGames/' + gameId + '/').update({"gameOver": true})
       $scope.winnerModal.show()
     } else {
       console.log("no one won")
       // reset gameOver value in firebase
-      rootDatabase.ref(`currentGames/${gameId}/`).update({"gameOver": false})
+      rootDatabase.ref('currentGames/' + gameId + '/').update({"gameOver": false})
 
       // reset winning team value in firebase
-      rootDatabase.ref(`currentGames/${gameId}/`).update({"winningTeam": ""})
+      rootDatabase.ref('currentGames/' + gameId + '/').update({"winningTeam": ""})
     }
   }
 
@@ -545,18 +545,18 @@ angular.module('starter.controllers', [])
     // move current game to past games
 
     // grab current game info
-    rootDatabase.ref(`currentGames/${gameId}/`).once('value')
-      .then((snap)=>{
+    rootDatabase.ref('currentGames/' + gameId + '/').once('value')
+      .then(function(snap){
         console.log("snap shot yo", snap.val())
 
         // post object to pastGames
-        rootDatabase.ref(`pastGames/`).push(snap.val())
+        rootDatabase.ref('pastGames/').push(snap.val())
       })
-      .then(()=>{
+      .then(function(){
         // remove game from currentGames
-        rootDatabase.ref(`currentGames/${gameId}/`).remove()
+        rootDatabase.ref('currentGames/' + gameId + '/').remove()
       })
-      .then(()=>{
+      .then(function(){
         console.log("did this fire")
         // close modal
         $scope.closeWinnerModal()
@@ -577,16 +577,16 @@ angular.module('starter.controllers', [])
 // List a users hosted games partial controller
 .controller('UserGameListCtrl', function($scope, LiveGamesFactory, $stateParams, AuthFactory) {
 
-  let gameId = $stateParams.id
-  let hostUid = AuthFactory.getUserId()
-  // let hostUid = firebase.auth().currentUser.uid
+  var gameId = $stateParams.id
+  var hostUid = AuthFactory.getUserId()
+  // var hostUid = firebase.auth().currentUser.uid
 
   $scope.liveGameList
 
-  currentGamesRef.on('child_added', (snap)=>{
+  currentGamesRef.on('child_added', function(snap){
 
     LiveGamesFactory.getAllHostGames(hostUid)
-    .then((hostGameList)=>{
+    .then(function(hostGameList){
       $scope.liveGameList = hostGameList
       console.log("liveGameList", $scope.liveGameList)
       // console.log("liveGameList", $scope.liveGameList.gameId)
@@ -607,20 +607,20 @@ angular.module('starter.controllers', [])
 
   console.log("lives games ctrl loaded")
 
-  rootDatabase.ref('pastGames').on('child_added', ()=>{
+  rootDatabase.ref('pastGames').on('child_added', function(){
     console.log("child_added")
     PastGamesFactory.getPastGameList()
-    .then((gameList) => {
+    .then(function(gameList) {
       $scope.pastGames = gameList
 
       $scope.$apply()
     })
   })
 
-  rootDatabase.ref('pastGames').on('child_removed', ()=>{
+  rootDatabase.ref('pastGames').on('child_removed', function(){
     console.log("child_removed")
     PastGamesFactory.getPastGameList()
-    .then((gameList) => {
+    .then(function(gameList) {
       $scope.pastGames = gameList
       // $scope.selectedGame = $scope.gameNameList[0]
       $scope.$apply()
