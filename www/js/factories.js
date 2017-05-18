@@ -6,16 +6,15 @@ angular.module('starter.factories', [])
   return {
             getGameSettingsList: function(){
                       return gameSettingsRef.once('value')
-                        .then(function(snap) { return snap.val()})
+                        .then(function(snap) { return snap.val() })
                         .then(function(gameSettingsObject) {
-                          // console.log("gameSettingsObject", gameSettingsObject)
                           return gameSettingsObject
                         })
                     },
 
             getGameNameList: function(){
                       return gameSettingsRef.once('value')
-                        .then(function(snap) { return snap.val()})
+                        .then(function(snap) { return snap.val() })
                         .then(function(gameSettingsObject) {
 
                           var nameList = []
@@ -31,10 +30,6 @@ angular.module('starter.factories', [])
                       console.log("createNewGame function called from factory")
                       console.log("create game object", createGame)
                       return currentGamesRef.push(createGame)
-                        // .then((snap)=>{
-                        //   console.log("key?", snap.key)
-                        //   return snap.key
-                        // })
                     }
           } // Close factory return statement
 })
@@ -120,31 +115,3 @@ angular.module('starter.factories', [])
         } //end getUser
       } // close factory return satement
   }) // end Auth Factory
-
-
-// const checkForAuth = {
-//       checkForAuth ($location) {
-//         // http://stackoverflow.com/questions/37370224/firebase-stop-listening-onauthstatechanged
-//         const authReady = firebase.auth().onAuthStateChanged(user => {
-//           authReady()
-//           if (!user) {
-//             $location.url('/')
-//           }
-//         })
-//       }
-//     }
-
-
-
-// app.factory('DoctorFactory', function($http){
-
-//   return {
-//             getDoctorList: function(){
-//               return $http.get('https://west-doctors-patients.firebaseio.com/doctors.json')
-//                 .then(function(val){
-//                   console.log("val", val)
-//                   return val.data
-//               })
-//             }
-//           }
-// })
