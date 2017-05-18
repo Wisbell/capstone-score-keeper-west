@@ -2,13 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('ScoreKeeperAppCtrl', function($scope, $ionicModal, $timeout, AuthFactory, $location, $state, $ionicHistory) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
   // Form data for the login modal
   $scope.loginData = {};
   $scope.registerData = {};
@@ -81,25 +74,11 @@ angular.module('starter.controllers', [])
   // sign out function
   $scope.signOut = function() {
     console.log("sign out function called")
-    // firebase.auth().signOut()
 
     AuthFactory.signOut()
 
-    // $ionicHistory.nextViewOptions({
-    //   disableBack: true
-    // });
-
-    // $state.go(`app.about`)
-    // $location.url('/app/about')
-
-    // $state.go(`auth.login`)
     $location.url('/auth/login')
   }
-
-  // store uid
-  // const uid = firebase.auth().currentUser.uid;
-  // console.log("uid", uid)
-
 
 })
 
@@ -137,30 +116,6 @@ angular.module('starter.controllers', [])
 // Create Game Controller
 .controller('CreateGameCtrl', function($scope, CreateGameFactory) {
 
-  // get list of game names to choose from
-  // CreateGameFactory.getGameNameList()
-  //   .then((nameList) => {
-  //     $scope.gameNameList = nameList
-  //     $scope.selectedGame = $scope.gameNameList[0]
-  //   })
-
-  // // Object to store info from create game partial
-  // $scope.gameInfo = {
-  //     gameName: '',
-
-  //     team1: '',
-  //     team2: ''
-  //   }
-
-
-  // $scope.submitGameButton = () => {
-  //   console.log("submit button clicked")
-
-  //   // gameInfo.gameName = $scope.gameName
-
-  //   // console.log($scope.createForm.gameName)
-  //   console.log($scope.gameInfo.gameName)
-  // }
 })
 
 
@@ -287,7 +242,6 @@ angular.module('starter.controllers', [])
     LiveGamesFactory.getCurrentGameList()
     .then(function(gameList) {
       $scope.currentGames = gameList
-      // $scope.selectedGame = $scope.gameNameList[0]
       $scope.$apply()
     })
   })
@@ -298,10 +252,6 @@ angular.module('starter.controllers', [])
 
   // store stateParam to make get request
   var gameId = $stateParams.id
-
-  // $scope.test = "test"
-  // scope variable to store game object
-  // $scope.currentGame
 
   // get the particular games information from firebase and store it
   LiveGamesFactory.getParticularGame(gameId)
@@ -332,7 +282,6 @@ angular.module('starter.controllers', [])
       // This time out is necessary to prevent a bug with the modal
       $timeout(function(){
         if(!$scope.currentGame.gameOver){
-          // console.log("game over false")
           $scope.closeWinnerWatcherModal()
         }
       }, 100)
@@ -349,7 +298,6 @@ angular.module('starter.controllers', [])
 
   // close winner modal
   $scope.closeWinnerWatcherModal = function(){
-    // console.log("modal closed 2")
     $scope.winnerModal.hide()
     // http://stackoverflow.com/questions/36295476/ionicmodal-disabling-click-events
     $ionicBody.removeClass('modal-open');
@@ -372,11 +320,6 @@ angular.module('starter.controllers', [])
 
   // store stateParam to make get request
   var gameId = $stateParams.id
-  // $scope.winningScore
-
-  // $scope.test = "test"
-  // scope variable to store game object
-  // $scope.currentGame
 
   // get the particular games information from firebase and store it
   LiveGamesFactory.getParticularGame(gameId)
@@ -391,8 +334,6 @@ angular.module('starter.controllers', [])
     .then(function(game){
       $scope.currentGame = game;
       console.log("changed game", $scope.currentGame)
-      // console.log("team 1 points", $scope.currentGame.team1Points)
-      // console.log("team 2 points", $scope.currentGame.team2Points)
 
       $scope.$apply()
     })
@@ -414,9 +355,7 @@ angular.module('starter.controllers', [])
         console.log("team one score increment", $scope.teamOneScore)
 
         rootDatabase.ref('currentGames/' + gameId + '/').update({"team1Points": $scope.teamOneScore})
-        // return snap.val()
       })
-      // .then(()=>{$scope.checkWinner()})
   }
 
   $scope.decrementScoreTeamOne = function(){
@@ -426,7 +365,6 @@ angular.module('starter.controllers', [])
 
     rootDatabase.ref('currentGames/' + gameId + '/team1Points').once('value')
       .then(function(snap) {
-        // console.log('test')
         console.log('snap', snap.val())
 
         if(snap.val() >= 1){
@@ -435,7 +373,6 @@ angular.module('starter.controllers', [])
           console.log($scope.teamOneScore)
 
           rootDatabase.ref('currentGames/' + gameId + '/').update({"team1Points": $scope.teamOneScore})
-          // return snap.val()
         } else {
           console.log("score cannot be less than 0")
         }
@@ -450,16 +387,13 @@ angular.module('starter.controllers', [])
 
     rootDatabase.ref('currentGames/' + gameId + '/team2Points').once('value')
       .then(function(snap) {
-        // console.log('test')
         console.log('snap', snap.val())
         $scope.teamTwoScore = snap.val()
         $scope.teamTwoScore = $scope.teamTwoScore + 1
         console.log("updated team two score", $scope.teamTwoScore)
 
         rootDatabase.ref('currentGames/' + gameId + '/').update({"team2Points": $scope.teamTwoScore})
-        // return snap.val()
       })
-      // .then(()=>{$scope.checkWinner()})
   }
 
   $scope.decrementScoreTeamTwo = function(){
@@ -470,7 +404,6 @@ angular.module('starter.controllers', [])
 
     rootDatabase.ref('currentGames/' + gameId + '/team2Points').once('value')
       .then(function(snap) {
-        // console.log('test')
         console.log('snap', snap.val())
 
         if(snap.val() >= 1){
@@ -479,7 +412,6 @@ angular.module('starter.controllers', [])
           console.log("updated team two score", $scope.teamTwoScore)
 
           rootDatabase.ref('currentGames/' + gameId + '/').update({"team2Points": $scope.teamTwoScore})
-          // return snap.val()
         }
       })
   }
@@ -561,8 +493,6 @@ angular.module('starter.controllers', [])
         console.log("did this fire")
         // close modal
         $scope.closeWinnerModal()
-        //then go here
-        // $location.url(`/app/about`, true)
 
         $ionicHistory.nextViewOptions({
           disableBack: true
@@ -570,7 +500,6 @@ angular.module('starter.controllers', [])
         $state.go('app.about')
       })
   }
-  // ping pong host - streaming stuff
 }) // Close Ping Pong Host Controller
 
 
@@ -595,11 +524,6 @@ angular.module('starter.controllers', [])
       $scope.$apply()
     })
   })
-
-    // make increment and decrement score functions
-    // with real time changes
-
-
 })
 
 
@@ -623,7 +547,6 @@ angular.module('starter.controllers', [])
     PastGamesFactory.getPastGameList()
     .then(function(gameList) {
       $scope.pastGames = gameList
-      // $scope.selectedGame = $scope.gameNameList[0]
       $scope.$apply()
     })
   })
