@@ -1,5 +1,6 @@
-angular.module('starter.controllers', [])
+// angular.module('starter.controllers', [])
 
+scoreKeeper
 .controller('ScoreKeeperAppCtrl', function($scope, $ionicModal, $timeout, AuthFactory, $location, $state, $ionicHistory) {
 
   // Form data for the login modal

@@ -1,4 +1,6 @@
-angular.module('starter.factories', [])
+// angular.module('starter.factories', [])
+
+scoreKeeper
 
 // Create Game Factory
 .factory('CreateGameFactory', function($http){

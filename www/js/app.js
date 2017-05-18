@@ -31,14 +31,17 @@ const checkForAuth = {
       }
     }
 
-
+// const bandmates = angular.module('bandmates', ['ionic', 'ui.rCalendar', 'ngCordova', "ion-datetime-picker", 'ion-autocomplete'])
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.factories'])
 
-.run(function($ionicPlatform) {
+// const bandmates = angular.module('bandmates', ['ionic', 'ui.rCalendar', 'ngCordova', "ion-datetime-picker", 'ion-autocomplete'])
+// const scoreKeeper = angular.module('scoreKeeper', ['ionic', 'starter.controllers', 'starter.factories'])
+const scoreKeeper = angular.module('scoreKeeper', ['ionic'])
+
+scoreKeeper.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
